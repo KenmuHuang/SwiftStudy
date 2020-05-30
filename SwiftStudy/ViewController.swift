@@ -9,12 +9,39 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+     /// 封面图片视图
+    @IBOutlet weak var imgVAvatar: UIImageView!
+    
+    /// 获取随机图片按钮
+    @IBOutlet weak var btnRandomImage: UIButton!
+    
+    /// 随机图片数组
+    let arrImageName = ["icon_home_dynamic_yellow", "icon_home_dynamic_blue", "icon_home_top_book_club"];
+    
+    /// 随机图片索引下标数
+    var randomImageNameIndex: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        updateImage()
     }
-
-
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        updateImage()
+    }
+    
+    func updateImage() -> Void {
+        randomImageNameIndex = Int(arc4random_uniform(3))
+        print("randomImageNameIndex = \(randomImageNameIndex)")
+        
+        if randomImageNameIndex < arrImageName.count {
+            imgVAvatar.image = UIImage(named: arrImageName[randomImageNameIndex])
+        }
+    }
+    
+    @IBAction func onRandomImageButtonClicked(_ sender: Any) {
+        updateImage()
+    }
 }
 
