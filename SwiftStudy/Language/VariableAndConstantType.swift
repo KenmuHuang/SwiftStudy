@@ -10,7 +10,7 @@ import UIKit
 
 class VariableAndConstantType: NSObject {
     func main() -> Void {
-        print("Hello, world!")
+        print("\n===\(NSStringFromClass(type(of: self)))===")
 
         var myVariable = 42
         myVariable = 50

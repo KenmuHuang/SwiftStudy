@@ -10,6 +10,8 @@ import UIKit
 
 class Function: NSObject {
     func main() -> Void {
+        print("\n===\(NSStringFromClass(type(of: self)))===")
+
         print(greet(person: "Bob", day: "Tuesday"))
         print(greet("John", on: "Wednesday"))
 

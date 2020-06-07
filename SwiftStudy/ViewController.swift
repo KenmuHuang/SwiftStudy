@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         VariableAndConstantType().main()
         Condition().main()
         Function().main()
+        Class().main()
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {

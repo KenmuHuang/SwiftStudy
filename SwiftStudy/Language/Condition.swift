@@ -10,6 +10,8 @@ import UIKit
 
 class Condition: NSObject {
     func main() -> Void {
+        print("\n===\(NSStringFromClass(type(of: self)))===")
+
         // For
         let individualScores = [75, 43, 103, 87, 12]
         var teamScore = 0
