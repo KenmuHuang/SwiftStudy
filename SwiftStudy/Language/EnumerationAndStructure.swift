@@ -7,6 +7,8 @@ import UIKit
 
 class EnumerationAndStructure {
     func main() -> Void {
+        print("\n===\(NSStringFromClass(type(of: self)))===")
+
         // 枚举
         let ace = Rank.ace
         let aceRawValue = ace.rawValue
@@ -27,7 +29,7 @@ class EnumerationAndStructure {
         let failure = ServerResponse.failure("Out of cheese")
         print(failure.simpleDescription())
 
-        // 结构；跟类的重要区别是：结构在代码中传递时始终会被复制，而类是通过引用传递的
+        // 结构；跟类的重要区别是：结构体是传值，类是传引用
         let threeOfSpades = Card(rank: .three, suit: .spades)
         print(threeOfSpades.simpleDescription())
     }
