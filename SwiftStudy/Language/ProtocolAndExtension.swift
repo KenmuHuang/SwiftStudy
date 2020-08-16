@@ -71,6 +71,7 @@ struct SimpleStructure: ExampleProtocol {
     }
 }
 
+/// 枚举（遵循自定义协议）
 enum SimpleEnumeration: Int, ExampleProtocol {
     case apple = 3
     case google, microsoft

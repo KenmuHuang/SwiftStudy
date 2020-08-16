@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4507631042C13229D03E969F /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450760814AD84D2BBA2B13FC /* Condition.swift */; };
+		450765B046FC864304D69B87 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450761D79B9A5FE64D18CD14 /* ErrorHandling.swift */; };
 		450766045AE2F80F5F702714 /* EnumerationAndStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45076CC644CCC97822C141B2 /* EnumerationAndStructure.swift */; };
 		450767A7D69CCCA3FDAAF218 /* ProtocolAndExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45076482DAF02F14EA9DDA07 /* ProtocolAndExtension.swift */; };
 		4507684DAD4C0E08BA36E805 /* VariableAndConstantType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450763AA58243B62CFD0DD55 /* VariableAndConstantType.swift */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		450760814AD84D2BBA2B13FC /* Condition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
+		450761D79B9A5FE64D18CD14 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		450763AA58243B62CFD0DD55 /* VariableAndConstantType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableAndConstantType.swift; sourceTree = "<group>"; };
 		45076482DAF02F14EA9DDA07 /* ProtocolAndExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolAndExtension.swift; sourceTree = "<group>"; };
 		450765AD64475D5F7CA0C1E0 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 				45076987F7BABB752DBCD248 /* Class.swift */,
 				45076CC644CCC97822C141B2 /* EnumerationAndStructure.swift */,
 				45076482DAF02F14EA9DDA07 /* ProtocolAndExtension.swift */,
+				450761D79B9A5FE64D18CD14 /* ErrorHandling.swift */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 				45076FF3590D9CBC5337FC02 /* Class.swift in Sources */,
 				450766045AE2F80F5F702714 /* EnumerationAndStructure.swift in Sources */,
 				450767A7D69CCCA3FDAAF218 /* ProtocolAndExtension.swift in Sources */,
+				450765B046FC864304D69B87 /* ErrorHandling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
