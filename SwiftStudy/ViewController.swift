@@ -32,6 +32,7 @@ class ViewController: UIViewController {
         EnumerationAndStructure().main()
         ProtocolAndExtension().main()
         ErrorHandling().main()
+        Generic().main()
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
