@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias AudioSample = UInt16
+
 class VariableAndConstantType: NSObject {
     func main() -> Void {
         print("\n===\(NSStringFromClass(type(of: self)))===")
@@ -46,5 +48,7 @@ class VariableAndConstantType: NSObject {
 
         let emptyArray = [String]()
         let emptyDictionary = [String: Float]()
+
+        var maxAmplitudeFound = AudioSample.min
     }
 }
