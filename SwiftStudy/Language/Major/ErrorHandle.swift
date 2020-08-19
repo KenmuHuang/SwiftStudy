@@ -12,7 +12,7 @@ let throwPrinterName3 = "On Fire"
 var fridgeIsOpen = false
 let fridgeContent = ["milk", "eggs", "leftovers"]
 
-class ErrorHandling {
+class ErrorHandle {
     func main() -> Void {
         print("\n===\(NSStringFromClass(type(of: self)))===")
 

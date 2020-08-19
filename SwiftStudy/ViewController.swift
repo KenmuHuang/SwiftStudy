@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         Class().main()
         EnumerationAndStructure().main()
         ProtocolAndExtension().main()
-        ErrorHandling().main()
+        ErrorHandle().main()
         Generic().main()
     }
     
