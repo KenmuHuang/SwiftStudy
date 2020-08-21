@@ -25,14 +25,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         updateImage()
-        VariableAndConstantType().main()
-        Condition().main()
-        Function().main()
-        Class().main()
-        EnumerationAndStructure().main()
-        ProtocolAndExtension().main()
-        ErrorHandle().main()
-        Generic().main()
+//        VariableAndConstantType().main()
+//        Condition().main()
+//        Function().main()
+//        Class().main()
+//        EnumerationAndStructure().main()
+//        ProtocolAndExtension().main()
+//        ErrorHandle().main()
+//        Generic().main()
+        TheBasics().main()
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
