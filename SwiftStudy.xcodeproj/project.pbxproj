@@ -96,6 +96,7 @@
 		F98F3ED4247F728800E30571 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F98F3ED7247F728800E30571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F98F3ED9247F728800E30571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9B480A924F014110000BEE8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +191,7 @@
 				F98F3ECB247F728700E30571 /* AppDelegate.swift */,
 				F98F3ECD247F728700E30571 /* SceneDelegate.swift */,
 				F98F3ECF247F728700E30571 /* ViewController.swift */,
+				F9B480A924F014110000BEE8 /* MyPlayground.playground */,
 				F98F3ED1247F728700E30571 /* Main.storyboard */,
 				F98F3ED4247F728800E30571 /* Assets.xcassets */,
 				F98F3ED6247F728800E30571 /* LaunchScreen.storyboard */,
