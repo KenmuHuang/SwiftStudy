@@ -14,6 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // 模拟器使用 Injection 工具
+        if TARGET_OS_SIMULATOR == 1 {
+            if let bundle = Bundle.init(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle") {
+                bundle.load()
+            }
+        }
+
         // Override point for customization after application launch.
         return true
     }
