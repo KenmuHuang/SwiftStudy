@@ -36,6 +36,28 @@ class Functions: MainProtocol {
         printWithoutCounting(content: "SomeInt is now \(someInt), and anotherInt is now \(anotherInt).")
         swapTwoInts(&someInt, &anotherInt)
         printWithoutCounting(content: "SomeInt is now \(someInt), and anotherInt is now \(anotherInt) after executing swap operation.")
+
+        // 使用函数类型
+        var mathFunction: (Int, Int) -> Int = addTwoInts
+        printWithoutCounting(content: "addTwoInts(5, 6) = \(mathFunction(5, 6))")
+
+        mathFunction = multiplyTwoInts
+        printWithoutCounting(content: "multiplyTwoInts(5, 6) = \(mathFunction(5, 6))")
+
+        let anotherMathFunction = addTwoInts
+        printWithoutCounting(content: "addTwoInts(50, 6) = \(anotherMathFunction(50, 6))")
+
+        // 函数类型作为参数类型
+        printMathResult(anotherMathFunction, 50, 6)
+
+        // 函数类型作为返回类型
+        var currentValue = 3
+        let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+        printWithoutCounting(content: "Value move nearer to zero, origin value is \(currentValue), now value is \(moveNearerToZero(currentValue))")
+
+        currentValue = 5
+        let moveNearerToTen = chooseStepFunction(backward: currentValue > 10)
+        printWithoutCounting(content: "Value move nearer to ten, origin value is \(currentValue), now value is \(moveNearerToTen(currentValue))")
     }
 
     ///
@@ -120,5 +142,32 @@ class Functions: MainProtocol {
         let temporaryA = a
         a = b
         b = temporaryA
+    }
+
+    // MARK: - 函数类型作为参数类型
+    func addTwoInts(_ a: Int, _ b: Int) -> Int {
+        return a + b
+    }
+
+    func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
+        return a * b
+    }
+
+    func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+        print("Result: \(mathFunction(a, b))")
+    }
+
+    // MARK: - 函数类型作为返回类型
+    func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+        // 嵌套函数
+        func stepForward(_ input: Int) -> Int {
+            return input + 1
+        }
+
+        func stepBackward(_ input: Int) -> Int {
+            return input - 1
+        }
+
+        return backward ? stepBackward : stepForward
     }
 }
