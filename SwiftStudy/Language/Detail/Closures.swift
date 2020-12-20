@@ -15,6 +15,22 @@ class Closures: MainProtocol {
         let descendingNames = sort(names: names, isDescending: true);
         let ascendingNames = sort(names: names, isDescending: false)
         print("name = \(names), descendingNames = \(descendingNames), ascendingNames = \(ascendingNames)")
+
+
+        someFunctionThatTakesAClosure(closure: {
+            print("不使用尾随闭包进行函数调用")
+        })
+
+        someFunctionThatTakesAClosure() {
+            print("使用尾随闭包进行函数调用")
+        }
+
+        someFunctionThatTakesAClosure {
+            print("如果闭包表达式是函数或方法的唯一参数，则当你使用尾随闭包时，你甚至可以把 () 省略掉")
+        }
+
+        let numbers = [16, 58, 510]
+        print("numbers = \(numbers), translate to \(translate(numbers: numbers))")
     }
 
     // MARK: - 闭包表达式
@@ -53,5 +69,31 @@ class Closures: MainProtocol {
         }
 
 //        return names.sorted(by: (isDescending ? backward : forward))
+    }
+
+    // MARK: - 尾随闭包
+    func someFunctionThatTakesAClosure(closure: () -> Void) {
+        closure()
+        print("closure() 函数之后执行")
+    }
+
+    func translate(numbers: [Int]) -> [String] {
+        let digitNames = [
+            0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+            5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
+        ]
+
+        let strings = numbers.map { number -> String in
+            var output = ""
+
+            var number = number
+            repeat {
+                output = digitNames[number % 10]! + output
+                number /= 10
+            } while number > 0
+
+            return output
+        }
+        return strings
     }
 }
