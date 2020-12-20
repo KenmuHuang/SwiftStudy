@@ -11,12 +11,14 @@ class Closures: MainProtocol {
     func main() -> Void {
         print("\n===\(NSStringFromClass(type(of: self)))===")
 
+        // 闭包表达式
         let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
         let descendingNames = sort(names: names, isDescending: true);
         let ascendingNames = sort(names: names, isDescending: false)
         print("name = \(names), descendingNames = \(descendingNames), ascendingNames = \(ascendingNames)")
 
 
+        // 尾随闭包
         someFunctionThatTakesAClosure(closure: {
             print("不使用尾随闭包进行函数调用")
         })
@@ -31,6 +33,21 @@ class Closures: MainProtocol {
 
         let numbers = [16, 58, 510]
         print("numbers = \(numbers), translate to \(translate(numbers: numbers))")
+
+
+        // 值捕获
+        let incrementByTen = makeIncrementer(forIncrement: 10)
+        for _ in 1..<6 {
+            print("incrementByTen() = \(incrementByTen())")
+        }
+
+        let incrementBySeven = makeIncrementer(forIncrement: 7)
+        for _ in 1...3 {
+            print("incrementBySeven() = \(incrementBySeven())")
+        }
+
+        // 闭包是引用类型：再次调用原来的 incrementByTen 会继续增加它自己的 runningTotal 变量，该变量和 incrementBySeven 中捕获的变量没有任何联系
+        print("incrementByTen() = \(incrementByTen())")
     }
 
     // MARK: - 闭包表达式
@@ -95,5 +112,17 @@ class Closures: MainProtocol {
             return output
         }
         return strings
+    }
+
+    // MARK: - 值捕获
+    func makeIncrementer(forIncrement amount: Int) -> () -> Int {
+        var runningTotal = 0
+
+        func incrementer() -> Int {
+            runningTotal += amount
+            return runningTotal
+        }
+
+        return incrementer
     }
 }
