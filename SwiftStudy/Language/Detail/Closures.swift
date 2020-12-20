@@ -27,6 +27,16 @@ class Closures: MainProtocol {
     }
     
     func sort(names: [String], isDescending: Bool) -> [String] {
-        return names.sorted(by: (isDescending ? backward : forward))
+        if isDescending {
+            return names.sorted(by: {(s1: String, s2: String) -> Bool in
+                return s1 > s2
+            })
+        } else {
+            return names.sorted(by: {(s1: String, s2: String) -> Bool in
+                return s1 < s2
+            })
+        }
+
+//        return names.sorted(by: (isDescending ? backward : forward))
     }
 }
