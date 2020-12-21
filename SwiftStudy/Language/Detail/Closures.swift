@@ -8,6 +8,9 @@ import Foundation
 ///
 /// 闭包：https://swiftgg.gitbook.io/swift/swift-jiao-cheng/07_closures
 class Closures: MainProtocol {
+    var escapingCompletionHandlers: [() -> Void] = []
+    var escapingClosure = 10
+
     func main() -> Void {
         print("\n===\(NSStringFromClass(type(of: self)))===")
 
@@ -48,6 +51,17 @@ class Closures: MainProtocol {
 
         // 闭包是引用类型：再次调用原来的 incrementByTen 会继续增加它自己的 runningTotal 变量，该变量和 incrementBySeven 中捕获的变量没有任何联系
         print("incrementByTen() = \(incrementByTen())")
+
+
+        // 逃逸闭包
+        let instance = Closures()
+        instance.doSomethingAboutEscapingClosure()
+        // 打印：200
+        print(instance.escapingClosure)
+
+        instance.escapingCompletionHandlers.first?()
+        // 打印：100
+        print(instance.escapingClosure)
     }
 
     // MARK: - 闭包表达式
@@ -124,5 +138,24 @@ class Closures: MainProtocol {
         }
 
         return incrementer
+    }
+
+    // MARK: - 逃逸闭包
+    func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+        completionHandler()
+        escapingCompletionHandlers.append(completionHandler)
+    }
+
+    func someFunctionWithNoEscapingClosure(completionHandler: () -> Void) {
+        completionHandler()
+    }
+
+    func doSomethingAboutEscapingClosure() {
+        someFunctionWithEscapingClosure {
+            self.escapingClosure = 100
+        }
+        someFunctionWithNoEscapingClosure(completionHandler: {
+            escapingClosure = 200
+        })
     }
 }
