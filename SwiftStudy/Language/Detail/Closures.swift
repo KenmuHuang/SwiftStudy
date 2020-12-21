@@ -62,6 +62,11 @@ class Closures: MainProtocol {
         instance.escapingCompletionHandlers.first?()
         // 打印：100
         print(instance.escapingClosure)
+
+
+        // 自动闭包
+        autoClosure()
+        autoClosureWithEscapingSign()
     }
 
     // MARK: - 闭包表达式
@@ -157,5 +162,53 @@ class Closures: MainProtocol {
         someFunctionWithNoEscapingClosure(completionHandler: {
             escapingClosure = 200
         })
+    }
+
+    // MARK: - 自动闭包
+    func autoClosure() {
+        var customerInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+        let customerProvider = {
+            customerInLine.remove(at: 0)
+        }
+
+        print("customerInLine = \(customerInLine), customerInLine.count = \(customerInLine.count)")
+        serve(customer: customerProvider)
+        print("customerInLine = \(customerInLine), customerInLine.count = \(customerInLine.count)")
+        serveWithAutoClosureSign(customer: customerInLine.removeFirst())
+        print("customerInLine = \(customerInLine), customerInLine.count = \(customerInLine.count)")
+    }
+
+    func serve(customer customerProvider: () -> String) {
+        print("Now serving \(customerProvider()) by first way!")
+    }
+
+    func serveWithAutoClosureSign(customer customerProvider: @autoclosure () -> String) {
+        // 过度使用 autoclosures 会让你的代码变得难以理解。上下文和函数名应该能够清晰地表明求值是被延迟执行的。
+        print("Now serving \(customerProvider()) by second way!")
+    }
+    
+    func autoClosureWithEscapingSign() {
+        var customerInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+        // 数组内元素为字典，乱序
+        var customerProviders: [Int : () -> String] = [:]
+
+        func collectionCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
+            customerProviders[customerProviders.count] = customerProvider
+        }
+        
+        collectionCustomerProviders(customerInLine.remove(at: customerInLine.count - 1))
+        collectionCustomerProviders(customerInLine.removeLast())
+        
+        print("customerProviders.count = \(customerProviders.count)")
+        for customerProvider in customerProviders {
+            if customerProvider.key == 0 {
+                serve(customer: customerProvider.value)
+            } else {
+                let customerPrint = {
+                    customerProvider.value()
+                }
+                serveWithAutoClosureSign(customer: customerPrint())
+            }
+        }
     }
 }
