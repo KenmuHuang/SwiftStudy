@@ -54,5 +54,17 @@ class Enumerations: MainProtocol {
             print("Other direction is \(directionToHeadBySingleLine)")
         }
 
+
+        // 枚举成员的遍历
+        enum Beverage: CaseIterable {
+            case coffee, tea, juice
+        }
+
+        let numberOfChoices = Beverage.allCases.count
+        print("\(numberOfChoices) beverages available as following: ")
+
+        for beverage in Beverage.allCases {
+            print(beverage)
+        }
     }
 }
