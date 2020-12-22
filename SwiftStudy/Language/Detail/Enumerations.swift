@@ -127,5 +127,47 @@ class Enumerations: MainProtocol {
         } else {
             print("There isn't a planet at position \(positionToFind)")
         }
+
+
+        // 递归枚举
+        // 可以在枚举成员前加上 indirect 来表示该成员可递归
+        /// 算术表达式枚举
+        /// number - 纯数字
+        /// addition - 两个表达式相加
+        /// multiplication - 两个表达式相乘
+        enum ArithmeticExpression {
+            case number(Int)
+            indirect case addition(ArithmeticExpression, ArithmeticExpression)
+            indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+        }
+
+        // 可以在枚举类型开头加上 indirect 关键字来表明它的所有成员都是可递归
+        indirect enum ArithmeticExpressionForAll {
+            case number(Int)
+            case addition(ArithmeticExpressionForAll, ArithmeticExpressionForAll)
+            case multiplication(ArithmeticExpressionForAll, ArithmeticExpressionForAll)
+        }
+
+        ///
+        /// 该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法运算，则分别计算左边表达式和右边表达式的值，然后相加或相乘
+        /// - Parameter expression: 算术表达式枚举
+        /// - Returns: 递归枚举操作后的值
+        func evaluate(_ expression: ArithmeticExpression) -> Int {
+            switch expression {
+            case let .number(value):
+                return value
+            case let .addition(left, right):
+                return evaluate(left) + evaluate(right)
+            case let .multiplication(left, right):
+                return evaluate(left) * evaluate(right)
+            }
+        }
+
+        // (5 + 4) * 2
+        let five = ArithmeticExpression.number(5)
+        let four = ArithmeticExpression.number(4)
+        let sum = ArithmeticExpression.addition(five, four)
+        let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+        print("(5 + 4) * 2 = \(evaluate(product))")
     }
 }
