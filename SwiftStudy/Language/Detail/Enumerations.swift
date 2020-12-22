@@ -29,5 +29,30 @@ class Enumerations: MainProtocol {
         var directionToHead = CompassPoint.east
         directionToHead = .south
         print("directionToHead = \(directionToHead)")
+
+        var directionToHeadBySingleLine = CompassPointBySingleLine.north
+        directionToHeadBySingleLine = .west
+
+
+        // 使用 Switch 语句匹配枚举值
+        switch directionToHead {
+        case .east:
+            print("Where the sun rises")
+        case .south:
+            print("Watch out for penguins")
+        case .west:
+            print("Where the skies are blue")
+        case .north:
+            print("Lots of planets have a north")
+        }
+
+        // switch 语句必须穷举所有情况，当不需要匹配每个枚举成员的时候，你可以提供一个 default 分支来涵盖所有未明确处理的枚举成员
+        switch directionToHeadBySingleLine {
+        case .east:
+            print("The sun rises from \(directionToHeadBySingleLine)")
+        default:
+            print("Other direction is \(directionToHeadBySingleLine)")
+        }
+
     }
 }
