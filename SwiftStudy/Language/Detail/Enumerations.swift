@@ -66,5 +66,27 @@ class Enumerations: MainProtocol {
         for beverage in Beverage.allCases {
             print(beverage)
         }
+
+
+        // 关联值
+        /// 条形码枚举
+        /// upc - 四个整型值的元组存储 UPC 码，分别为「数字系统、厂商、产品、检查位」
+        /// qrCode - 任意长度的字符串储存 QR 码
+        enum Barcode {
+            case upc(Int, Int, Int, Int)
+            case qrCode(String)
+        }
+
+        var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+        productBarcode = Barcode.qrCode("ABCDEFGH")
+
+        switch productBarcode {
+        case .upc(let numberSystem, let manufacturer, let product, let check):
+            print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+        case .qrCode(var productCode):
+            print("QR code: \(productCode).")
+
+            productCode = "IJK"
+        }
     }
 }
