@@ -48,8 +48,12 @@ class Properties: MainProtocol {
         print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 
-
         // 只读计算属性
+        let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+        print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+
+        // 由于是只读，所以不能赋值，会报错
+//        fourByFiveByTwo.volume = 20.0
 
 
 
@@ -122,6 +126,13 @@ class Properties: MainProtocol {
                 origin.x = newValue.x - (size.width / 2)
                 origin.y = newValue.y - (size.height / 2)
             }
+        }
+    }
+
+    struct Cuboid {
+        var width = 0.0, height = 0.0, depth = 0.0
+        var volume: Double {
+            return width * height * depth
         }
     }
 
