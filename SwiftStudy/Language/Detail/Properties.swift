@@ -35,9 +35,18 @@ class Properties: MainProtocol {
 
 
         // 简化 Setter 声明
+        var square = Rect(origin: Point(x: 0.0, y: 0.0), size: Size(width: 10.0, height: 10.0))
+        let initialSquareCenter = square.center
+        print("initialSquareCenter is at \(initialSquareCenter)")
+        print("square.center is at \(square.center)")
 
 
         // 简化 Getter 声明
+        square.center = Point(x: 15.0, y: 15.0)
+        print("initialSquareCenter is now at \(initialSquareCenter)")
+        print("square.center is now at \(square.center)")
+        print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+
 
 
         // 只读计算属性
@@ -82,7 +91,39 @@ class Properties: MainProtocol {
     }
     
     // MARK: - 计算属性
+    struct Point {
+        var x = 0.0, y = 0.0
+    }
 
+    struct Size {
+        var width = 0.0, height = 0.0
+    }
+
+    struct Rect {
+        var origin = Point()
+        var size = Size()
+        var center: Point {
+//            get {
+//                let centerX = origin.x + (size.width / 2)
+//                let centerY = origin.y + (size.height / 2)
+//                return Point(x: centerX, y: centerY)
+//            }
+            // 简化 Getter 声明：如果整个 getter 是单一表达式，getter 会隐式地返回这个表达式结果
+            get {
+                Point(x: origin.x + (size.width / 2),
+                      y: origin.y + (size.height / 2))
+            }
+//            set(newCenter) {
+//                origin.x = newCenter.x - (size.width / 2)
+//                origin.y = newCenter.y - (size.height / 2)
+//            }
+            // 简化 Setter 声明：如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称 newValue
+            set {
+                origin.x = newValue.x - (size.width / 2)
+                origin.y = newValue.y - (size.height / 2)
+            }
+        }
+    }
 
     // MARK: - 属性观察器
 
