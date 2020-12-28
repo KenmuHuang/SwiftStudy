@@ -14,13 +14,7 @@ class Properties: MainProtocol {
         storedProperties()
         computedProperties()
         propertyObservers()
-
-        // 设置被包装属性的初始值
-
-
-        // 从属性包装器中呈现一个值
-
-
+        propertyWrappers()
 
         // 类型属性语法
 
@@ -193,7 +187,75 @@ class Properties: MainProtocol {
     }
 
     // MARK: - 属性包装器
+    private func propertyWrappers() {
+        var smallRectangle = SmallRectangle()
+        // 打印：0
+        print(smallRectangle.height)
 
+        smallRectangle.height = 10
+        // 打印：10
+        print(smallRectangle.height)
+
+        smallRectangle.height = 24
+        // 打印：12
+        print(smallRectangle.height)
+
+
+        // 设置被包装属性的初始值
+
+
+        // 从属性包装器中呈现一个值
+
+    }
+
+    @propertyWrapper
+    struct TwelveOrLess {
+        /*
+         使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后应用到多个属性上来进行复用。
+         */
+        private var number: Int
+
+        init(number: Int = 0) {
+            self.number = number
+        }
+
+        var wrappedValue: Int {
+            get {
+                return number
+            }
+            set {
+                number = min(newValue, 12)
+            }
+        }
+    }
+
+//    struct SmallRectangle {
+//        private var _width = TwelveOrLess()
+//        private var _height = TwelveOrLess()
+//
+//        var width: Int {
+//            get {
+//                return _width.wrappedValue
+//            }
+//            set {
+//                _width.wrappedValue = newValue
+//            }
+//        }
+//
+//        var height: Int {
+//            get {
+//                return _height.wrappedValue
+//            }
+//            set {
+//                _height.wrappedValue = newValue
+//            }
+//        }
+//    }
+
+    struct SmallRectangle {
+        @TwelveOrLess var width: Int
+        @TwelveOrLess var height: Int
+    }
 
     // MARK: - 全局变量和局部变量
 
