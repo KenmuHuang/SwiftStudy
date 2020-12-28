@@ -11,6 +11,26 @@ class Properties: MainProtocol {
     func main() -> Void {
         print("\n===\(NSStringFromClass(type(of: self)))===")
 
+        storedProperties()
+        computedProperties()
+        propertyObservers()
+
+        // 设置被包装属性的初始值
+
+
+        // 从属性包装器中呈现一个值
+
+
+
+        // 类型属性语法
+
+
+        // 获取和设置类型属性的值
+
+    }
+
+    // MARK: - 存储属性
+    private func storedProperties() {
         // 常量结构体实例的存储属性
         var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
         rangeOfThreeItems.firstValue = 6
@@ -31,47 +51,8 @@ class Properties: MainProtocol {
 
         // 存储属性和实例变量
         // Swift 中的属性没有对应的实例变量，属性的备份存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。属性的全部信息——包括命名、类型和内存管理特征——作为类型定义的一部分，都定义在一个地方。
-
-
-
-        // 简化 Setter 声明
-        var square = Rect(origin: Point(x: 0.0, y: 0.0), size: Size(width: 10.0, height: 10.0))
-        let initialSquareCenter = square.center
-        print("initialSquareCenter is at \(initialSquareCenter)")
-        print("square.center is at \(square.center)")
-
-
-        // 简化 Getter 声明
-        square.center = Point(x: 15.0, y: 15.0)
-        print("initialSquareCenter is now at \(initialSquareCenter)")
-        print("square.center is now at \(square.center)")
-        print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-
-
-        // 只读计算属性
-        let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-        print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-
-        // 由于是只读，所以不能赋值，会报错
-//        fourByFiveByTwo.volume = 20.0
-
-
-
-        // 设置被包装属性的初始值
-
-
-        // 从属性包装器中呈现一个值
-
-
-
-        // 类型属性语法
-
-
-        // 获取和设置类型属性的值
-
     }
 
-    // MARK: - 存储属性
     ///
     /// 描述整数的区间，且这个范围值在被创建后不能被修改。
     struct FixedLengthRange {
@@ -95,6 +76,29 @@ class Properties: MainProtocol {
     }
     
     // MARK: - 计算属性
+    private func computedProperties() {
+        // 简化 Setter 声明
+        var square = Rect(origin: Point(x: 0.0, y: 0.0), size: Size(width: 10.0, height: 10.0))
+        let initialSquareCenter = square.center
+        print("initialSquareCenter is at \(initialSquareCenter)")
+        print("square.center is at \(square.center)")
+
+
+        // 简化 Getter 声明
+        square.center = Point(x: 15.0, y: 15.0)
+        print("initialSquareCenter is now at \(initialSquareCenter)")
+        print("square.center is now at \(square.center)")
+        print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+
+
+        // 只读计算属性
+        let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+        print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+
+        // 由于是只读，所以不能赋值，会报错
+//        fourByFiveByTwo.volume = 20.0
+    }
+
     struct Point {
         var x = 0.0, y = 0.0
     }
@@ -129,6 +133,8 @@ class Properties: MainProtocol {
         }
     }
 
+    ///
+    /// 三维空间的立方体结构
     struct Cuboid {
         var width = 0.0, height = 0.0, depth = 0.0
         var volume: Double {
@@ -137,7 +143,54 @@ class Properties: MainProtocol {
     }
 
     // MARK: - 属性观察器
+    private func propertyObservers() {
+        let stepCounter = StepCounter()
 
+        // 打印：将 totalSteps 的值设置为 200
+        // 打印：增加了 200 步
+        stepCounter.totalSteps = 200
+
+        // 打印：将 totalSteps 的值设置为 360
+        // 打印：增加了 160 步
+        stepCounter.totalSteps = 360
+
+        // 打印：将 totalSteps 的值设置为 896
+        // 打印：增加了 536 步
+        stepCounter.totalSteps = 896
+    }
+
+    ///
+    /// 步行时的总步数类
+    class StepCounter {
+        /*
+         你可以在以下位置添加属性观察器：
+          1、自定义的存储属性
+          2、继承的存储属性
+          3、继承的计算属性
+
+         可以为属性添加其中一个或两个观察器：
+          willSet 在新的值被设置之前调用
+          didSet 在新的值被设置之后调用
+         */
+        var totalSteps: Int = 0 {
+//            willSet(newTotalSteps) {
+//                print("将 totalSteps 的值设置为 \(newTotalSteps)")
+//            }
+            willSet {
+                print("将 totalSteps 的值设置为 \(newValue)")
+            }
+//            didSet(oldTotalSteps) {
+//                if totalSteps > oldTotalSteps {
+//                    print("增加了 \(totalSteps - oldTotalSteps) 步")
+//                }
+//            }
+            didSet {
+                if totalSteps > oldValue {
+                    print("增加了 \(totalSteps - oldValue) 步")
+                }
+            }
+        }
+    }
 
     // MARK: - 属性包装器
 
