@@ -202,6 +202,30 @@ class Properties: MainProtocol {
 
 
         // 设置被包装属性的初始值
+        let zeroRectangle = ZeroRectangle()
+        // 打印：0 0
+        print(zeroRectangle.width, zeroRectangle.height)
+
+        let unitRectangle = UnitRectangle()
+        // 打印：1 1
+        print(unitRectangle.width, unitRectangle.height)
+
+        var narrowRectangle = NarrowRectangle()
+        // 打印：3 2
+        print(narrowRectangle.width, narrowRectangle.height)
+
+        narrowRectangle.width = 100
+        narrowRectangle.height = 100
+        // 打印：4 5
+        print(narrowRectangle.width, narrowRectangle.height)
+
+        var mixedRectangle = MixedRectangle()
+        // 打印：1
+        print(mixedRectangle.height)
+
+        mixedRectangle.height = 20
+        // 打印：12
+        print(mixedRectangle.height)
 
 
         // 从属性包装器中呈现一个值
@@ -215,10 +239,6 @@ class Properties: MainProtocol {
          */
         private var number: Int
 
-        init(number: Int = 0) {
-            self.number = number
-        }
-
         var wrappedValue: Int {
             get {
                 return number
@@ -226,6 +246,10 @@ class Properties: MainProtocol {
             set {
                 number = min(newValue, 12)
             }
+        }
+
+        init(number: Int = 0) {
+            self.number = number
         }
     }
 
@@ -255,6 +279,56 @@ class Properties: MainProtocol {
     struct SmallRectangle {
         @TwelveOrLess var width: Int
         @TwelveOrLess var height: Int
+    }
+
+    @propertyWrapper
+    struct SmallNumber {
+        private var maximum: Int
+        private var number: Int
+
+        var wrappedValue: Int {
+            get {
+                return number
+            }
+            set {
+                number = min(newValue, maximum)
+            }
+        }
+
+        init() {
+            maximum = 12
+            number = 0
+        }
+
+        init(wrappedValue: Int) {
+            maximum = 12
+            self.number = min(wrappedValue, maximum)
+        }
+
+        init(wrappedValue: Int, maximum: Int) {
+            self.maximum = maximum
+            self.number = min(wrappedValue, maximum)
+        }
+    }
+
+    struct ZeroRectangle {
+        @SmallNumber var width: Int
+        @SmallNumber var height: Int
+    }
+
+    struct UnitRectangle {
+        @SmallNumber var height: Int = 1
+        @SmallNumber var width: Int = 1
+    }
+
+    struct NarrowRectangle {
+        @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+        @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+    }
+
+    struct MixedRectangle {
+        @SmallNumber(maximum: 9) var width: Int = 2
+        @SmallNumber var height: Int = 1
     }
 
     // MARK: - 全局变量和局部变量
