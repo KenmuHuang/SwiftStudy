@@ -15,12 +15,7 @@ class Properties: MainProtocol {
         computedProperties()
         propertyObservers()
         propertyWrappers()
-
-        // 类型属性语法
-
-
-        // 获取和设置类型属性的值
-
+        typeProperties()
     }
 
     // MARK: - 存储属性
@@ -376,8 +371,130 @@ class Properties: MainProtocol {
     }
 
     // MARK: - 全局变量和局部变量
-
+    /*
+     计算属性和观察属性所描述的功能也可以用于全局变量和局部变量。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
+     全局的常量或变量都是延迟计算的，跟 延时加载存储属性 相似，不同的地方在于，全局的常量或变量不需要标记 lazy 修饰符。
+     局部范围的常量和变量从不延迟计算。
+     */
 
     // MARK: - 类型属性
+    /*
+     实例属性属于一个特定类型的实例，每创建一个实例，实例都拥有属于自己的一套属性值，实例之间的属性相互独立。
+     你也可以为类型本身定义属性，无论创建了多少个该类型的实例，这些属性都只有唯一一份。这种属性就是类型属性。
 
+     注意：跟实例的存储型属性不同，必须给存储型类型属性指定默认值，因为类型本身没有构造器，也就无法在初始化过程中使用构造器给类型属性赋值。
+     存储型类型属性是延迟初始化的，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行一次初始化，并且不需要对其使用 lazy 修饰符。
+
+     在 C 或 Objective-C 中，与某个类型关联的静态常量和静态变量，是作为 global（全局）静态变量定义的。但是在 Swift 中，类型属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
+     使用关键字 static 来定义类型属性。在为类定义计算型类型属性时，可以改用关键字 class 来支持子类对父类的实现进行重写
+     */
+    private func typeProperties() {
+        // 获取和设置类型属性的值
+        // 打印：Some structure value. 1
+        print(SomeStructure.storedTypeProperty, SomeStructure.computedTypeProperty)
+        SomeStructure.storedTypeProperty = "Another structure value."
+
+        // 打印：Another structure value. 1
+        print(SomeStructure.storedTypeProperty, SomeStructure.computedTypeProperty)
+
+        // 打印：Some enumeration value. 6
+        print(SomeEnumeration.storedTypeProperty, SomeEnumeration.computedTypeProperty)
+
+        // 打印：Some class value. 27 107
+        print(SomeClass.storedTypeProperty, SomeClass.computedTypeProperty, SomeClass.overrideableComputedTypeProperty)
+
+        // 打印：Some class value. 27 214
+        print(ChildOfSomeClass.storedTypeProperty, ChildOfSomeClass.computedTypeProperty, ChildOfSomeClass.overrideableComputedTypeProperty)
+        SomeClass.storedTypeProperty = "Another class value."
+        ChildOfSomeClass.storedTypeProperty = "Another child class value."
+
+        // 打印：Another child class value. 27 107
+        // 父子类继承后，非重写的计算型类型属性 overrideableComputedTypeProperty 外，其他属性都是只有唯一一份非相互独立的
+        print(SomeClass.storedTypeProperty, SomeClass.computedTypeProperty, SomeClass.overrideableComputedTypeProperty)
+
+        // 打印：Another child class value. 27 214
+        print(ChildOfSomeClass.storedTypeProperty, ChildOfSomeClass.computedTypeProperty, ChildOfSomeClass.overrideableComputedTypeProperty)
+
+        let childOfSomeClass = ChildOfSomeClass()
+        print(childOfSomeClass.otherProperty)
+        childOfSomeClass.otherProperty = "Another child class value."
+
+        // 左右两个声道的音量允许在 0 到 10 之间的整数
+        var leftChannel = AudioChannel()
+        var rightChannel = AudioChannel()
+        leftChannel.currentLevel = 7
+        print(leftChannel.currentLevel)
+        print(AudioChannel.maxInputLevelForAllChannels)
+
+        rightChannel.currentLevel = 11
+        print(rightChannel.currentLevel)
+        print(AudioChannel.maxInputLevelForAllChannels)
+    }
+
+    struct SomeStructure {
+        static var storedTypeProperty = "Some structure value."
+        static var computedTypeProperty: Int {
+            return 1
+        }
+    }
+
+    enum SomeEnumeration {
+        static var storedTypeProperty = "Some enumeration value."
+        static var computedTypeProperty: Int {
+            return 6
+        }
+    }
+
+    class SomeClass {
+        static var storedTypeProperty = "Some class value."
+        static var computedTypeProperty: Int {
+            return 27
+        }
+        class var overrideableComputedTypeProperty: Int {
+            return 107
+        }
+
+        init() {
+            print("SomeClass object initial")
+        }
+    }
+
+    class ChildOfSomeClass : SomeClass {
+        var otherProperty: String
+
+        override convenience init() {
+            self.init(otherProperty: "Child class value.")
+        }
+
+        init(otherProperty: String) {
+            self.otherProperty = otherProperty
+            super.init()
+
+            print("ChildOfSomeClass object initial")
+        }
+
+        override class var overrideableComputedTypeProperty: Int {
+            return super.overrideableComputedTypeProperty * 2
+        }
+    }
+
+    struct AudioChannel {
+        /// 音量的最大上限阈值，它是一个值为 10 的常量，对所有实例都可见，如果音量高于 10，则取最大上限值 10
+        static let thresholdLevel = 10
+        /// 所有 AudioChannel 实例的最大输入音量，初始值是 0
+        static var maxInputLevelForAllChannels = 0
+        /// 当前声道现在的音量，取值为 0 到 10
+        var currentLevel: Int = 0 {
+            didSet {
+                if currentLevel > AudioChannel.thresholdLevel {
+                    // 将当前音量限制在阈值之内
+                    currentLevel = AudioChannel.thresholdLevel
+                }
+                if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                    // 存储当前音量作为新的最大输入音量
+                    AudioChannel.maxInputLevelForAllChannels = currentLevel
+                }
+            }
+        }
+    }
 }
