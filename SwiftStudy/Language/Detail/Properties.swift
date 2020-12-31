@@ -202,7 +202,7 @@ class Properties: MainProtocol {
 
 
         // 设置被包装属性的初始值
-        let zeroRectangle = ZeroRectangle()
+        var zeroRectangle = ZeroRectangle()
         // 打印：0 0
         print(zeroRectangle.width, zeroRectangle.height)
 
@@ -229,7 +229,16 @@ class Properties: MainProtocol {
 
 
         // 从属性包装器中呈现一个值
+        zeroRectangle.width = 4
+        print(zeroRectangle.$width)
 
+        zeroRectangle.width = 55
+        print(zeroRectangle.$width)
+
+        var sizedRectangle = SizedRectangle()
+        print("sizedRectangle.width: \(sizedRectangle.width), sizedRectangle.height: \(sizedRectangle.height)")
+        print("sizedRectangle.resizeOverMaximum: \(sizedRectangle.resizeOverMaximum(to: .small))", "sizedRectangle.width: \(sizedRectangle.width)", "sizedRectangle.height: \(sizedRectangle.height)")
+        print("sizedRectangle.resizeOverMaximum: \(sizedRectangle.resizeOverMaximum(to: .large))", "sizedRectangle.width: \(sizedRectangle.width)", "sizedRectangle.height: \(sizedRectangle.height)")
     }
 
     @propertyWrapper
@@ -285,29 +294,40 @@ class Properties: MainProtocol {
     struct SmallNumber {
         private var maximum: Int
         private var number: Int
+        var projectedValue: Bool
 
         var wrappedValue: Int {
             get {
                 return number
             }
             set {
-                number = min(newValue, maximum)
+//                number = min(newValue, maximum)
+                if newValue > maximum {
+                    number = maximum
+                    projectedValue = true
+                } else {
+                    number = newValue
+                    projectedValue = false
+                }
             }
         }
 
         init() {
             maximum = 12
             number = 0
+            projectedValue = false
         }
 
         init(wrappedValue: Int) {
             maximum = 12
             self.number = min(wrappedValue, maximum)
+            projectedValue = false
         }
 
         init(wrappedValue: Int, maximum: Int) {
             self.maximum = maximum
             self.number = min(wrappedValue, maximum)
+            projectedValue = false
         }
     }
 
@@ -329,6 +349,30 @@ class Properties: MainProtocol {
     struct MixedRectangle {
         @SmallNumber(maximum: 9) var width: Int = 2
         @SmallNumber var height: Int = 1
+    }
+
+    enum SizeType {
+        case small, large
+    }
+
+    struct SizedRectangle {
+        @SmallNumber(wrappedValue: 0, maximum: 12) var width: Int
+        @SmallNumber(wrappedValue: 0, maximum: 12) var height: Int
+
+        mutating func resizeOverMaximum(to sizeType: SizeType) -> Bool {
+            /*
+             当从类型的一部分代码中访问被呈现值，例如属性 getter 或实例方法，你可以在属性名称之前省略 self.，就像访问其他属性一样。以下示例中的代码用 $height 和 $width 引用包装器 height 和 width 的被呈现值
+             */
+            switch sizeType {
+            case .small:
+                width = 5
+                height = 10
+            case .large:
+                width = 50
+                height = 100
+            }
+            return $width || $height
+        }
     }
 
     // MARK: - 全局变量和局部变量
