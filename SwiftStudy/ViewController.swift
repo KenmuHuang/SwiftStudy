@@ -44,6 +44,7 @@ class ViewController: UIViewController {
         StructuresAndClasses().main()
         Properties().main()
         Methods().main()
+        Subscripts().main()
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -63,7 +64,7 @@ class ViewController: UIViewController {
         updateImage()
 
         // 学习的内容暂时放这测试，测试完成再放到 viewDidLoad
-        Subscripts().main()
+        Inheritance().main()
     }
 }
 
