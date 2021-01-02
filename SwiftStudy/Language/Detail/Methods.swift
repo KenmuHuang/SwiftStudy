@@ -12,6 +12,7 @@ class Methods: MainProtocol {
         print("\n===\(NSStringFromClass(type(of: self)))===")
 
         instanceMethods()
+        typeMethods()
     }
 
     // MARK: - 实例方法
@@ -123,4 +124,77 @@ class Methods: MainProtocol {
     }
 
     // MARK: - 类型方法
+    /*
+     在方法的 func 关键字之前加上关键字 static，来指定类型方法。类还可以用关键字 class 来指定，从而允许子类重写父类该方法的实现。
+
+     在 Objective-C 中，你只能为 Objective-C 的类类型（classes）定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法。每一个类型方法都被它所支持的类型显式包含。
+
+     因为允许在调用 advance(to:) 时候忽略返回值，不会产生编译警告，所以函数被标注为 @discardableResult 属性
+     */
+    func typeMethods() {
+        var player = Player(name: "Alex")
+        player.complete(level: 1)
+
+        // 打印：
+        print("Highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+
+        player = Player(name: "John")
+        if player.tracker.advance(to: 6) {
+            print("Player is now on level 6")
+        } else {
+            print("Level 6 has not yet been unlocked")
+        }
+    }
+
+    ///
+    /// 监测玩家的游戏发展情况的结构体（这是一个单人游戏，但也可以存储多个玩家在同一设备上的游戏信息）
+    struct LevelTracker {
+        static var highestUnlockedLevel = 1
+        var currentLevel = 1
+
+        ///
+        /// 一旦新等级被解锁，它会更新 highestUnlockedLevel 的值
+        /// - Parameter level: 被解锁的新等级
+        static func unlock(_ level: Int) {
+            if level > highestUnlockedLevel {
+                highestUnlockedLevel = level
+            }
+        }
+
+        ///
+        /// 如果某个给定的等级已经被解锁，它将返回 true
+        /// - Parameter level: 某个给定的等级
+        /// - Returns: 某个给定的等级是否已经被解锁
+        static func isUnlocked(_ level: Int) -> Bool {
+            return level <= highestUnlockedLevel
+        }
+
+        @discardableResult
+        ///
+        /// 会在更新 currentLevel 之前检查所请求的新等级是否已经解锁，返回布尔值以指示是否已设置 currentLevel
+        /// - Parameter level: 某个给定的等级
+        /// - Returns: 是否已设置 currentLevel
+        mutating func advance(to level: Int) -> Bool {
+            if LevelTracker.isUnlocked(level) {
+                currentLevel = level
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
+    class Player {
+        var tracker = LevelTracker()
+        let name: String
+
+        init(name: String) {
+            self.name = name
+        }
+
+        func complete(level: Int) {
+            LevelTracker.unlock(level + 1)
+            tracker.advance(to: level + 1)
+        }
+    }
 }
