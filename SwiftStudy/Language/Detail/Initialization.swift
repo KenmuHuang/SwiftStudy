@@ -18,34 +18,133 @@ class Initialization: MainProtocol {
         classInheritanceAndInitialization()
         failableInitializers()
         requiredInitializers()
-        settingInitialValuesForStoredProperties()
+        settingADefaultPropertyValueWithAClosureFunction()
     }
 
     // MARK: - 存储属性的初始赋值
     private func settingInitialValuesForStoredProperties() {
         // 构造器
+        let fahrenheit = Fahrenheit()
+        // 打印：32.0
+        print(fahrenheit.temperature)
 
 
         // 默认属性值
+        var fahrenheit2 = Fahrenheit2()
+        // 打印：1.0
+        print(fahrenheit2.temperature)
 
+        fahrenheit2 = Fahrenheit2(temperature: 21.0)
+        // 打印：21.0
+        print(fahrenheit2.temperature)
+    }
+
+    ///
+    /// 华氏温度的结构体
+    struct Fahrenheit {
+        var temperature: Double
+
+        init() {
+            temperature = 32.0
+        }
+    }
+
+    struct Fahrenheit2 {
+        var temperature: Double = 1.0
     }
 
     // MARK: - 自定义构造过程
     private func customizingInitialization() {
         // 形参的构造过程
+        let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
+        print(boilingPointOfWater.temperatureInCelsius)
+
+        let freezingPointOfWater = Celsius(fromKelvin: 273.15)
+        print(freezingPointOfWater.temperatureInCelsius)
 
 
         // 形参命名和实参标签
+        var halfGray = Color(white: 0.5)
+        print(halfGray)
+
+        var magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
+        print(magenta)
 
 
         // 不带实参标签的构造器形参
+        halfGray = Color(0.5)
+        print(halfGray)
+
+        magenta = Color(1.0, 0.0, 1.0)
+        print(magenta)
 
 
         // 可选属性类型
-
+        let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
+        cheeseQuestion.ask()
+        if cheeseQuestion.response == nil {
+            cheeseQuestion.response = "Yes, I do like cheese."
+            cheeseQuestion.answer()
+        }
 
         // 构造过程中常量属性的赋值
+        let beetsQuestion = SurveyQuestion(text: "How about beets?")
+        beetsQuestion.ask()
+    }
 
+    struct Celsius {
+        var temperatureInCelsius: Double
+        init(fromFahrenheit fahrenheit: Double) {
+            temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+        }
+        init(fromKelvin kelvin: Double) {
+            temperatureInCelsius = kelvin - 273.15
+        }
+    }
+
+    struct Color {
+        let red, green, blue: Double
+
+        init(white: Double) {
+            red = white
+            green = white
+            blue = white
+        }
+
+        init(_ white: Double) {
+            red = white
+            green = white
+            blue = white
+        }
+
+        init(red: Double, green: Double, blue: Double) {
+            self.red = red
+            self.green = green
+            self.blue = blue
+        }
+
+        init(_ red: Double, _ green: Double, _ blue: Double) {
+            self.red = red
+            self.green = green
+            self.blue = blue
+        }
+    }
+
+    class SurveyQuestion {
+        let text: String
+        var response: String?
+
+        init(text: String) {
+            self.text = text
+        }
+
+        func ask() {
+            print(text)
+        }
+
+        func answer() {
+            print(response!)
+        }
     }
 
     // MARK: - 默认构造器
