@@ -391,20 +391,180 @@ class Initialization: MainProtocol {
 
     // MARK: - 可失败构造器
     private func failableInitializers() {
+        /*
+         注意：检查空字符串的值（如 ""，而不是 "Giraffe" ）和检查值为 nil 的可选类型的字符串是两个完全不同的概念。上例中的空字符串（""）其实是一个有效的，非可选类型的字符串。这里我们之所以让 Animal 的可失败构造器构造失败，只是因为对于 Animal 这个类的 species 属性来说，它更适合有一个具体的值，而不是空字符串。
+         */
+        let someCreature = Animal(species: "Giraffe")
+        if let giraffe = someCreature {
+            print("An animal was initialized with a species of \(giraffe.species)")
+        }
+
+        let anonymousCreature = Animal(species: "")
+        if anonymousCreature == nil {
+            print("The anonymous creature could not be initialized")
+        }
+
         // 枚举类型的可失败构造器
+        let fahrenheitUnit = TemperatureUnit(symbol: "F")
+        if fahrenheitUnit != nil {
+            print("This is a defined temperature unit, so initialization succeeded.")
+        }
+
+        let unknownUnit = TemperatureUnit(symbol: "X")
+        if unknownUnit == nil {
+            print("This is not a defined temperature unit, so initialization failed.")
+        }
 
 
         // 带原始值的枚举类型的可失败构造器
+        /*
+         带原始值的枚举类型会自带一个可失败构造器 init?(rawValue:)，该可失败构造器有一个合适的原始值类型的 rawValue 形参，选择找到的相匹配的枚举成员，找不到则构造失败。
+         */
+        let fahrenheitUnitByMoreSimple = TemperatureUnitByMoreSimple(rawValue: "F")
+        if fahrenheitUnitByMoreSimple != nil {
+            print("This is a defined temperature unit, so initialization succeeded.")
+        }
 
+        let unknownUnitByMoreSimple = TemperatureUnitByMoreSimple(rawValue: "X")
+        if unknownUnitByMoreSimple == nil {
+            print("This is not a defined temperature unit, so initialization failed.")
+        }
 
         // 构造失败的传递
+        /*
+         类、结构体、枚举的可失败构造器可以横向代理到它们自己其他的可失败构造器。类似的，子类的可失败构造器也能向上代理到父类的可失败构造器。
+         无论是向上代理还是横向代理，如果你代理到的其他可失败构造器触发构造失败，整个构造过程将立即终止，接下来的任何构造代码不会再被执行。
 
+         注意：可失败构造器也可以代理到其它的不可失败构造器。通过这种方式，你可以增加一个可能的失败状态到现有的构造过程中。
+         */
+        if let twoSocks = CartItem(name: "sock", quantity: 2) {
+            print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+        }
+
+        if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
+            print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+        } else {
+            print("Unable to initialize zero shirts")
+        }
+
+        if let oneUnnamed = CartItem(name: "", quantity: 1) {
+            print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+        } else {
+            print("Unable to initialize one unnamed product")
+        }
 
         // 重写一个可失败构造器
+        let automaticallyNamedDocument = AutomaticallyNamedDocument()
+        print(automaticallyNamedDocument.name!)
+
+        let untitledDocument = UntitledDocument()
+        print(untitledDocument.name!)
 
 
         // init! 可失败构造器
+        /*
+         通常来说我们通过在 init 关键字后添加问号的方式（init?）来定义一个可失败构造器，但你也可以通过在 init 后面添加感叹号的方式来定义一个可失败构造器（init!），该可失败构造器将会构建一个对应类型的隐式解包可选类型的对象。
 
+         你可以在 init? 中代理到 init!，反之亦然。你也可以用 init? 重写 init!，反之亦然。你还可以用 init 代理到 init!，不过，一旦 init! 构造失败，则会触发一个断言。
+         */
+    }
+
+    struct Animal {
+        let species: String
+
+        init?(species: String) {
+            if species.isEmpty {
+                return nil
+            }
+
+            self.species = species
+        }
+    }
+
+    enum TemperatureUnit {
+        case Kelvin, Celsius, Fahrenheit
+        init?(symbol: Character) {
+            switch symbol {
+            case "K":
+                self = .Kelvin
+            case "C":
+                self = .Celsius
+            case "F":
+                self = .Fahrenheit
+            default:
+                return nil
+            }
+        }
+    }
+
+    enum TemperatureUnitByMoreSimple: Character {
+        case Kelvin = "K"
+        case Celsius = "C"
+        case Fahrenheit = "F"
+    }
+
+    class Product {
+        let name: String
+        init?(name: String) {
+            if name.isEmpty {
+                return nil
+            }
+
+            self.name = name
+        }
+    }
+
+    class CartItem: Product {
+        let quantity: Int
+        init?(name: String, quantity: Int) {
+            if quantity < 1 {
+                return nil
+            }
+
+            self.quantity = quantity
+
+            super.init(name: name)
+        }
+    }
+
+    class Document {
+        var name: String?
+
+        init() {
+
+        }
+
+        init?(name: String) {
+            if name.isEmpty {
+                return nil
+            }
+
+            self.name = name
+        }
+    }
+
+    class AutomaticallyNamedDocument: Document {
+        override init() {
+            super.init()
+
+            self.name = "[Untitled]"
+        }
+
+        override init(name: String) {
+            super.init()
+
+            if name.isEmpty {
+                self.name = "[Untitled]"
+            } else {
+                self.name = name
+            }
+        }
+    }
+
+    class UntitledDocument: Document {
+        override init() {
+            super.init(name: "[Untitled]")!
+        }
     }
 
     // MARK: - 必要构造器
