@@ -568,8 +568,33 @@ class Initialization: MainProtocol {
     }
 
     // MARK: - 必要构造器
-    private func requiredInitializers() {
+    /*
+     在类的构造器前添加 required 修饰符表明所有该类的子类都必须实现该构造器。
+     在子类重写父类的必要构造器时，必须在子类的构造器前也添加 required 修饰符，表明该构造器要求也应用于继承链后面的子类。在重写父类中必要的指定构造器时，不需要添加 override 修饰符。
 
+     注意：如果子类继承的构造器能满足必要构造器的要求，则无须在子类中显式提供必要构造器的实现。
+     */
+    private func requiredInitializers() {
+        let someSubclass = SomeSubclass()
+        print(someSubclass.someProperty)
+    }
+
+    class SomeClass {
+        required init() {
+            print("SomeClass initial.")
+        }
+    }
+
+    class SomeSubclass: SomeClass {
+        let someProperty: String
+
+        required init() {
+            someProperty = "Some property"
+
+            super.init()
+
+            print("SomeSubclass initial with \(someProperty).")
+        }
     }
 
     // MARK: - 通过闭包或函数设置属性的默认值
