@@ -150,7 +150,21 @@ class Initialization: MainProtocol {
     // MARK: - 默认构造器
     private func defaultInitializers() {
         // 结构体的逐一成员构造器
+        let zeroByTwo = Size(height: 2.0)
+        print(zeroByTwo.width, zeroByTwo.height)
 
+        let zeroByZero = Size()
+        print(zeroByZero.width, zeroByZero.height)
+    }
+
+    class ShoppingListItem {
+        var name: String?
+        var quantity = 1
+        var purchased = false
+    }
+
+    struct Size {
+        var width = 0.0, height = 0.0
     }
 
     // MARK: - 值类型的构造器代理
