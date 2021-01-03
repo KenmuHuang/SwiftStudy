@@ -169,7 +169,42 @@ class Initialization: MainProtocol {
 
     // MARK: - 值类型的构造器代理
     private func initializerDelegationForValueTypes() {
+        /*
+         注意：假如你希望默认构造器、逐一成员构造器以及你自己的自定义构造器都能用来创建实例，可以将自定义的构造器写到扩展（extension）中，而不是写在值类型的原始定义中。
+         */
+        let basicRect = Rect()
+        print("basicRect = \(basicRect)")
 
+        let originRect = Rect(origin: Point(x: 2.0, y: 2.0), size: Size(width: 5.0, height: 5.0))
+        print("originRect = \(originRect)")
+
+        let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+            size: Size(width: 3.0, height: 3.0))
+        print("centerRect = \(centerRect)")
+    }
+
+    struct Point {
+        var x = 0.0, y = 0.0
+    }
+
+    struct Rect {
+        var origin = Point()
+        var size = Size()
+
+        init() {
+
+        }
+
+        init(origin: Point, size: Size) {
+            self.origin = origin
+            self.size = size
+        }
+
+        init(center: Point, size: Size) {
+            let originX = center.x - size.width / 2
+            let originY = center.y - size.height / 2
+            self.init(origin: Point(x: originX, y: originY), size: size)
+        }
     }
 
     // MARK: - 类的继承和构造过程
