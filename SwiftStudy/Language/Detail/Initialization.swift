@@ -599,6 +599,36 @@ class Initialization: MainProtocol {
 
     // MARK: - 通过闭包或函数设置属性的默认值
     private func settingADefaultPropertyValueWithAClosureFunction() {
+        /*
+         如果某个存储型属性的默认值需要一些自定义或设置，你可以使用闭包或全局函数为其提供定制的默认值。每当某个属性所在类型的新实例被构造时，对应的闭包或函数会被调用，而它们的返回值会当做默认值赋值给这个属性。
 
+         这种类型的闭包或函数通常会创建一个跟属性类型相同的临时变量，然后修改它的值以满足预期的初始状态，最后返回这个临时变量，作为属性的默认值。
+
+         注意：闭包结尾的花括号后面接了一对空的小括号。这用来告诉 Swift 立即执行此闭包。如果你忽略了这对括号，相当于将闭包本身作为值赋值给了属性，而不是将闭包的返回值赋值给属性。
+         注意：如果你使用闭包来初始化属性，请记住在闭包执行时，实例的其它部分都还没有初始化。这意味着你不能在闭包里访问其它属性，即使这些属性有默认值。同样，你也不能使用隐式的 self 属性，或者调用任何实例方法。
+         */
+        let board = Chessboard()
+        print(board.squareIsBlackAt(row: 0, column: 1))
+        print(board.squareIsBlackAt(row: 7, column: 7))
+
+    }
+
+    struct Chessboard {
+        let boardColors: [Bool] = {
+            var temporaryBoard = [Bool]()
+            var isBlack = false
+            for i in 1...8 {
+                for j in 1...8 {
+                    temporaryBoard.append(isBlack)
+                    isBlack = !isBlack
+                }
+                isBlack = !isBlack
+            }
+            return temporaryBoard
+        }()
+
+        func squareIsBlackAt(row: Int, column: Int) -> Bool {
+            return boardColors[(row * 8) + column]
+        }
     }
 }
