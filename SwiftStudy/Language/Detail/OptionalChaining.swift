@@ -22,7 +22,39 @@ class OptionalChaining: MainProtocol {
 
     // MARK: - 使用可选链式调用代替强制解包
     private func asAnAlternativeToForcedUnwrapping() {
+        let john = Person()
 
+        // 如果使用叹号（!）强制解包获得这个 john 的 residence 属性中的 numberOfRooms 值，会触发运行时错误，因为这时 residence 没有可以解包的值
+//        let roomCount = john.residence!.numberOfRooms
+
+        if let roomCount = john.residence?.numberOfRooms {
+            print("John's residence has \(roomCount) room(s).")
+        } else {
+            print("Unable to retrieve the number of rooms.")
+        }
+
+        var roomCount = john.residence?.numberOfRooms
+        print("roomCount = \(roomCount ?? 0)")
+
+        john.residence = Residence()
+        roomCount = john.residence?.numberOfRooms
+        print("roomCount = \(roomCount ?? 0)")
+
+        john.residence?.numberOfRooms = 3
+        roomCount = john.residence?.numberOfRooms
+        print("roomCount = \(roomCount ?? 0)")
+    }
+
+    ///
+    /// 住宅类
+    class Residence {
+        var numberOfRooms = 1
+    }
+
+    ///
+    /// 人类
+    class Person {
+        var residence: Residence?
     }
 
     // MARK: - 为可选链式调用定义模型类
