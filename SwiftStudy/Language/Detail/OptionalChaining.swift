@@ -129,7 +129,22 @@ class OptionalChaining: MainProtocol {
 
     // MARK: - 通过可选链式调用来调用方法
     private func callingMethods() {
+        let john = Person()
+        john.residence = Residence()
 
+        // 如果在可选值上通过可选链式调用来调用这个方法，该方法的返回类型会是 Void?，而不是 Void，因为通过可选链式调用得到的返回值都是可选的。这样我们就可以使用 if 语句来判断能否成功调用 printNumberOfRooms() 方法，即使方法本身没有定义返回值。通过判断返回值是否为 nil 可以判断调用是否成功
+        if john.residence?.printNumberOfRooms() != nil {
+            print("It was possible to print the number of rooms.")
+        } else {
+            print("It was not possible to print the number of rooms.")
+        }
+
+        // 同样的，可以据此判断通过可选链式调用为属性赋值是否成功。在上面的 通过可选链式调用访问属性 的例子中，我们尝试给 john.residence 中的 address 属性赋值，即使 residence 为 nil。通过可选链式调用给属性赋值会返回 Void?，通过判断返回值是否为 nil 就可以知道赋值是否成功
+        if (john.residence?.address = createAddress()) != nil {
+            print("It was possible to set the address.")
+        } else {
+            print("It was not possible to set the address.")
+        }
     }
 
     // MARK: - 通过可选链式调用访问下标
