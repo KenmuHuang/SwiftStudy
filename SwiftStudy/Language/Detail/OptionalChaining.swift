@@ -106,7 +106,25 @@ class OptionalChaining: MainProtocol {
 
     // MARK: - 通过可选链式调用访问属性
     private func accessingProperties() {
+        let john = Person()
+        if let roomCount = john.residence?.numberOfRooms {
+            print("John's residence has \(roomCount) room(s).")
+        } else {
+            print("Unable to retrieve the number of rooms.")
+        }
 
+        // 使用一个函数来创建 Address 实例，然后将该实例返回用于赋值。该函数会在返回前打印“Function was called”，这使你能验证等号右侧的代码是否被执行
+        // john.residence 为 nil 对应可选链式调用失败时，等号右侧的代码不会被执行
+        john.residence?.address = createAddress()
+    }
+
+    func createAddress() -> Address {
+        print("Function of createAddress was called.")
+
+        let someAddress = Address()
+        someAddress.buildingNumber = "29"
+        someAddress.street = "Acacia Road"
+        return someAddress
     }
 
     // MARK: - 通过可选链式调用来调用方法
