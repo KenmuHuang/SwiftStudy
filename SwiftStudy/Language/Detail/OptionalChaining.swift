@@ -39,16 +39,30 @@ class OptionalChaining: MainProtocol {
         john.residence = Residence()
         roomCount = john.residence?.numberOfRooms
         print("roomCount = \(roomCount ?? 0)")
-
-        john.residence?.numberOfRooms = 3
-        roomCount = john.residence?.numberOfRooms
-        print("roomCount = \(roomCount ?? 0)")
     }
 
     ///
     /// 住宅类
     class Residence {
-        var numberOfRooms = 1
+        var rooms = [Room]()
+        var address: Address?
+
+        var numberOfRooms: Int {
+            return rooms.count
+        }
+
+        subscript(index: Int) -> Room {
+            get {
+              return rooms[index]
+            }
+            set(newValue) {
+                rooms[index] = newValue
+            }
+        }
+
+        func printNumberOfRooms() {
+            print("The number of rooms is \(numberOfRooms)")
+        }
     }
 
     ///
@@ -60,6 +74,34 @@ class OptionalChaining: MainProtocol {
     // MARK: - 为可选链式调用定义模型类
     private func definingModelClasses() {
 
+    }
+
+    ///
+    /// 房间类
+    class Room {
+        let name: String
+
+        init(name: String) {
+            self.name = name
+        }
+    }
+
+    ///
+    /// 地址类
+    class Address {
+        var buildingName: String?
+        var buildingNumber: String?
+        var street: String?
+
+        func buildingIdentifier() -> String? {
+            if buildingName != nil {
+                return buildingName
+            } else if let buildingNumber = buildingNumber, let street = street {
+                return "\(buildingNumber) \(street)"
+            } else {
+                return nil
+            }
+        }
     }
 
     // MARK: - 通过可选链式调用访问属性
