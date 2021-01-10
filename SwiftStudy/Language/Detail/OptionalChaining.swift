@@ -182,7 +182,24 @@ class OptionalChaining: MainProtocol {
 
     // MARK: - 连接多层可选链式调用
     private func linkingMultipleLevels() {
+        /*
+         通过可选链式调用访问一个 Int 值，将会返回 Int?，无论使用了多少层可选链式调用。
+         类似的，通过可选链式调用访问 Int? 值，依旧会返回 Int? 值，并不会返回 Int??。
+         */
+        let john = Person()
+        if let johnsStreet = john.residence?.address?.street {
+            print("John's street name is \(johnsStreet).")
+        } else {
+            print("Unable to retrieve the address.")
+        }
 
+        john.residence = Residence()
+        john.residence?.address = createAddress()
+        if let johnsStreet = john.residence?.address?.street {
+            print("John's street name is \(johnsStreet).")
+        } else {
+            print("Unable to retrieve the address.")
+        }
     }
 
     // MARK: - 在方法的可选返回值上进行可选链式调用
