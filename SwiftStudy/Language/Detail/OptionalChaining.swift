@@ -204,6 +204,20 @@ class OptionalChaining: MainProtocol {
 
     // MARK: - 在方法的可选返回值上进行可选链式调用
     private func onMethodsWithOptionalReturnValues() {
+        let john = Person()
+        john.residence = Residence()
+        john.residence?.address = createAddress()
+        if let buildingIdentifier = john.residence?.address?.buildingIdentifier()  {
+            print("John's building identifier is \(buildingIdentifier).")
+        }
 
+        // 注意：在方法的圆括号后面加上问号是因为你要在 buildingIdentifier() 方法的可选返回值上进行可选链式调用，而不是 buildingIdentifier() 方法本身
+        if let beginsWithThe = john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+            if beginsWithThe {
+                print("John's building identifier begins with \"The\".")
+            } else {
+                print("John's building identifier does not begin with \"The\".")
+            }
+        }
     }
 }
