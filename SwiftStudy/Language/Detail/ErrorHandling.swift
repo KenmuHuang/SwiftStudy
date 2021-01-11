@@ -11,11 +11,33 @@ class ErrorHandling: MainProtocol {
     func main() -> Void {
         print("\n===\(NSStringFromClass(type(of: self)))===")
 
+        do {
+            try representingAndThrowingErrors()
+        } catch {
+            print(error)
+        }
+        handlingErrors()
+        specifyingCleanupActions()
     }
 
     // MARK: - 表示与抛出错误
-    private func representingAndThrowingErrors() {
+    private func representingAndThrowingErrors() throws {
+        let ownCoins = 3
+        let coinsNeeded = 5
+        if ownCoins < coinsNeeded {
+            throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
+        }
+    }
 
+    ///
+    /// 自动贩卖机
+    enum VendingMachineError: Error {
+        /// 选择无效
+        case invalidSelection
+        /// 金额不足
+        case insufficientFunds(coinsNeeded: Int)
+        /// 缺货
+        case outOfStock
     }
 
     // MARK: - 处理错误
