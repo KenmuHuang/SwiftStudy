@@ -52,7 +52,39 @@ class ErrorHandling: MainProtocol {
 
 
         // 用 Do-Catch 处理错误
+        // 第一种：逐个枚举元素遍历
+        do {
+            try buyFavoriteSnack(person: "Bob", vendingMachine: vendingMachine)
+            print("Success! Yum.")
+        } catch VendingMachineError.invalidSelection {
+            print("Invalid Selection.")
+        } catch VendingMachineError.outOfStock {
+            print("Out of Stock.")
+        } catch VendingMachineError.insufficientFunds(let coinsNeeded) {
+            print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
+        } catch {
+            print("Unexpected error: \(error).")
+        }
 
+        vendingMachine.coinsDeposited = 6
+        // 第二种：判断枚举类型
+        do {
+            try buyFavoriteSnack(person: "Eve", vendingMachine: vendingMachine)
+        } catch is VendingMachineError {
+            print("Couldn't buy that from the vending machine.")
+        } catch {
+            // error 为默认异常常量
+            print("Unexpected non-vending-machine-related error: \(error)")
+        }
+
+        // 第三种：多个枚举元素一起遍历
+        do {
+            try buyFavoriteSnack(person: "John", vendingMachine: vendingMachine)
+        } catch VendingMachineError.invalidSelection, VendingMachineError.insufficientFunds, VendingMachineError.outOfStock {
+            print("Invalid selection, out of stock, or not enough money.")
+        } catch {
+            print("Unexpected non-vending-machine-related error: \(error)")
+        }
 
 
         // 将错误转换成可选值
