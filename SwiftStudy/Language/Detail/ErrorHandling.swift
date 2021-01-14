@@ -106,7 +106,11 @@ class ErrorHandling: MainProtocol {
         }
 
         // 禁用错误传递
-
+        /*
+         有时你知道某个 throwing 函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写 try! 来禁用错误传递，这会把调用包装在一个不会有错误抛出的运行时断言中。如果真的抛出了错误，你会得到一个运行时错误
+         */
+        let z = try! someThrowingFunction(isThrow: false)
+        print("z is \(z)")
     }
 
     ///
