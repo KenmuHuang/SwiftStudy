@@ -222,6 +222,67 @@ class ErrorHandling: MainProtocol {
 
     // MARK: - 指定清理操作
     private func specifyingCleanupActions() {
-
+        /*
+         defer 语句将代码的执行延迟到当前的作用域退出之前。该语句由 defer 关键字和要被延迟执行的语句组成。延迟执行的语句不能包含任何控制转移语句，例如 break、return 语句，或是抛出一个错误。延迟执行的操作会按照它们声明的顺序从后往前执行——也就是说，第一条 defer 语句中的代码最后才执行，第二条 defer 语句中的代码倒数第二个执行，以此类推。最后一条语句会第一个执行
+         */
+        do {
+            try processFile(filename: "./Resources/John Appleseed.jpg")
+        } catch {
+            print(error)
+        }
     }
+
+    func processFile(filename: String) throws {
+        if exists(filename) {
+            let file = open(filename)
+            defer {
+                close(file)
+                print("Finally second execute")
+            }
+            defer {
+                print("Finally first execute")
+            }
+            while let line = try file.readline() {
+                // 处理文件
+                print("readline: \(line.content)")
+            }
+            // close(file) 会在这里被调用，即作用域的最后。
+        }
+    }
+
+    func exists(_ filename: String) -> Bool {
+        return true
+    }
+
+    func open(_ filename: String) -> File {
+        return File()
+    }
+
+    func close(_ file: File) {
+        // 关闭
+    }
+
+    class File {
+        static var remainingLineCount  = 5
+        func readline() throws -> FileStream? {
+            if File.remainingLineCount > 0 {
+                File.remainingLineCount -= 1
+            }
+
+            if File.remainingLineCount == 0 {
+                throw VendingMachineError.outOfStock
+            }
+
+            return FileStream(content: "哈哈")
+        }
+    }
+
+    class FileStream {
+        var content: String
+
+        init(content: String) {
+            self.content = content
+        }
+    }
+
 }
