@@ -88,7 +88,22 @@ class ErrorHandling: MainProtocol {
 
 
         // 将错误转换成可选值
+        let x = try? someThrowingFunction(isThrow: true)
 
+        let y: Int?
+        do {
+            y = try someThrowingFunction(isThrow: true)
+        } catch {
+            y = nil
+        }
+
+        if x == nil && y == nil {
+            print("x is nil, and y is also nil")
+        }
+
+        if let result = fetchData(url: "http://www.baidu.com") {
+            print("code: \(result.code), data: \(result.data), message: \(result.message), url: \(result.url)")
+        }
 
         // 禁用错误传递
 
@@ -156,6 +171,49 @@ class ErrorHandling: MainProtocol {
             try vendingMachine.vend(itemNamed: name)
             self.name = name
         }
+    }
+
+    func someThrowingFunction(isThrow: Bool) throws -> Int {
+        if isThrow {
+            throw VendingMachineError.outOfStock
+        } else {
+            return 10
+        }
+    }
+
+    struct Data {
+        var code: Int
+        var data: [String : Any]
+        var message: String
+        var url: String
+    }
+
+    func fetchDataFromDisk(url: String) throws -> Data {
+        if url.count > 0 {
+            return Data.init(code: 0, data: ["data":"10"], message: "success", url: url)
+        } else {
+            throw VendingMachineError.outOfStock
+        }
+    }
+
+    func fetchDataFromServer(url: String) throws -> Data {
+        if url.count > 0 {
+            return Data.init(code: 0, data: ["data":"10"], message: "success", url: url)
+        } else {
+            throw VendingMachineError.outOfStock
+        }
+    }
+
+    func fetchData(url: String) -> Data? {
+        if let data = try? fetchDataFromDisk(url: url) {
+            return data
+        }
+
+        if let data = try? fetchDataFromServer(url: url) {
+            return data
+        }
+
+        return nil
     }
 
     // MARK: - 指定清理操作
