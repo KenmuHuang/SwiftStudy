@@ -74,15 +74,15 @@ class ViewController: UIViewController {
         let content = txtFInputContent.text
         if content != nil {
             // 包含-或_的内容，转换为驼峰式
-            var separator: Character = "-"
-            if content!.contains(separator) {
-                txtFInputContent.text = getConvertedContent(content: content!, separator: separator)
-                return
-            }
+            let separatorList: [Character] = ["-", "_"]
+            for separator in separatorList {
+                if content!.contains(separator) {
+                    txtFInputContent.text = getConvertedContent(content: content!, separator: separator)
 
-            separator = "_"
-            if content!.contains(separator) {
-                txtFInputContent.text = getConvertedContent(content: content!, separator: separator)
+                    // 复制转换的内容到粘贴板
+                    UIPasteboard.general.string = txtFInputContent.text
+                    break
+                }
             }
         }
     }
