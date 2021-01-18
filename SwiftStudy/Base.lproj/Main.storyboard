@@ -78,6 +78,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aspectOfAvatarImageView" destination="0W2-FV-KyR" id="n2E-d2-gf9"/>
                         <outlet property="btnConvert" destination="xEn-OQ-Gqy" id="f7l-xq-XrT"/>
                         <outlet property="btnRandomImage" destination="e6B-3k-Shf" id="8Y5-lf-uJw"/>
                         <outlet property="imgVAvatar" destination="kbp-N0-eh7" id="ngc-XU-KED"/>

@@ -21,8 +21,12 @@ class ViewController: UIViewController {
     /// 输入内容对应转换按钮
     @IBOutlet weak var btnConvert: UIButton!
     
+    /// 封面图片视图 - 宽高比例
+    @IBOutlet weak var aspectOfAvatarImageView: NSLayoutConstraint!
+    
+    
     /// 随机图片数组
-    let arrImageName = ["icon_home_dynamic_yellow", "icon_home_dynamic_blue", "icon_home_top_book_club"];
+    let arrImageName = ["icon_home_dynamic_yellow", "icon_home_dynamic_blue", "home_ambush_bg", "icon_dynamic_hot_recommend"];
     
     /// 随机图片索引下标数
     var randomImageNameIndex: Int = 0
@@ -89,11 +93,15 @@ class ViewController: UIViewController {
 
     // MARK: - Private Method
     private func updateImage() -> Void {
-        randomImageNameIndex = Int(arc4random_uniform(3))
+        let imageCount = arrImageName.count
+        randomImageNameIndex = Int(arc4random_uniform(UInt32(imageCount)))
         print("randomImageNameIndex = \(randomImageNameIndex)")
 
-        if randomImageNameIndex < arrImageName.count {
-            imgVAvatar.image = UIImage(named: arrImageName[randomImageNameIndex])
+        if randomImageNameIndex < imageCount {
+            if let image = UIImage(named: arrImageName[randomImageNameIndex]) {
+                imgVAvatar.image = image
+                aspectOfAvatarImageView = aspectOfAvatarImageView.setMultiplier(multiplier: image.size.width / image.size.height)
+            }
         }
     }
 
