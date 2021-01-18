@@ -49,6 +49,7 @@
 		F98F3ED3247F728700E30571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98F3ED1247F728700E30571 /* Main.storyboard */; };
 		F98F3ED5247F728800E30571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98F3ED4247F728800E30571 /* Assets.xcassets */; };
 		F98F3ED8247F728800E30571 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98F3ED6247F728800E30571 /* LaunchScreen.storyboard */; };
+		F9C858AA25B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,7 @@
 		F98F3ED7247F728800E30571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F98F3ED9247F728800E30571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9B480A924F014110000BEE8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 		450762DC59769F75D3C3D37A /* Language */ = {
 			isa = PBXGroup;
 			children = (
+				F9C858A825B5E75100B6D52F /* Extension */,
 				45076B9CD6301272224B6FD2 /* Major */,
 				4507604BE23E558F030C00B8 /* Detail */,
 				4507633DCF78F74881C51C6F /* MainProtocol.swift */,
@@ -199,6 +202,14 @@
 				450762DC59769F75D3C3D37A /* Language */,
 			);
 			path = SwiftStudy;
+			sourceTree = "<group>";
+		};
+		F9C858A825B5E75100B6D52F /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +304,7 @@
 				4507611C61F021CF3443E581 /* Closures.swift in Sources */,
 				450763FC8D8441B80A940348 /* Enumerations.swift in Sources */,
 				45076D48B588A2CB0BA03741 /* StructuresAndClasses.swift in Sources */,
+				F9C858AA25B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift in Sources */,
 				45076635C1F814E5C3F1CE5B /* Properties.swift in Sources */,
 				45076D368233508540DC710B /* Methods.swift in Sources */,
 				45076129E378E922115BCEE1 /* Subscripts.swift in Sources */,
