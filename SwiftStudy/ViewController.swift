@@ -63,6 +63,7 @@ class ViewController: UIViewController {
         TypeCasting().main()
         NestedTypes().main()
         Extensions().main()
+        Protocols().main()
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -73,7 +74,7 @@ class ViewController: UIViewController {
         updateImage()
 
         // 学习的内容暂时放这测试，测试完成再放到 viewDidLoad
-        Protocols().main()
+        Generics().main()
     }
     
     @IBAction func onConvertButtonClicked(_ sender: Any) {
