@@ -318,27 +318,180 @@ extension StringStack: SuffixableContainer {
 
 // MARK: - 泛型 Where 语句
 private func whereClauses() {
+    /*
+     类型约束 让你能够为泛型函数、下标、类型的类型参数定义一些强制要求。
+     对关联类型添加约束通常是非常有用的。你可以通过定义一个泛型 where 子句来实现。通过泛型 where 子句让关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 where 关键字紧跟在类型参数列表后面来定义 where 子句，where 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 where 子句。
+     */
+    var stackOfStrings = Stack<String>()
+    stackOfStrings.push("uno")
+    stackOfStrings.push("dos")
+    stackOfStrings.push("tres")
 
+    let arrayOfStrings = ["uno", "dos", "tres"]
+
+    if allItemsMatch(stackOfStrings, arrayOfStrings) {
+        print("All items match.")
+    } else {
+        print("Not all items match.")
+    }
 }
 
+func allItemsMatch<C1: Container, C2: Container>(_ someContainer: C1, _ anotherContainer: C2) -> Bool
+    where C1.Item == C2.Item, C1.Item: Equatable {
+    // 检查两个容器含有相同数量的元素
+    if someContainer.count != anotherContainer.count {
+        return false
+    }
+
+    // 检查每一对元素是否相等
+    for i in 0..<someContainer.count {
+        if someContainer[i] != anotherContainer[i] {
+            return false
+        }
+    }
+
+    return true
+}
 
 // MARK: - 具有泛型 Where 子句的扩展
 private func extensionsWithAGenericWhereClause() {
+    /*
+     如果尝试在其元素不符合 Equatable 协议的栈上调用 isTop(_:) 方法，则会收到编译时错误。
+     */
+    var stackOfStrings = Stack<String>()
+    stackOfStrings.push("uno")
+    stackOfStrings.push("dos")
+    stackOfStrings.push("tres")
 
+    var element = "tres"
+    if stackOfStrings.isTop(element) {
+        print("Top element is \(element).")
+    } else {
+        print("Top element is something else.")
+    }
+
+    element = "uno"
+    if stackOfStrings.startsWith(element) {
+        print("\(stackOfStrings) starts with \(element).")
+    } else {
+        print("\(stackOfStrings) starts with something else.")
+    }
+
+    print([1260.0, 1200.0, 98.6, 37.0].average())
 }
 
+///
+/// 扩展了泛型 Stack 结构体，只要容器的元素是符合 Equatable 协议的
+extension Stack where Element: Equatable {
+    func isTop(_ item: Element) -> Bool {
+        guard let topItem = items.last else {
+            // 这个栈是空时，返回 false
+            return false
+        }
+
+        return topItem == item
+    }
+}
+
+///
+/// 扩展了 Container 协议，只要容器的元素是符合 Equatable 协议的
+extension Container where Item: Equatable {
+    func startsWith(_ item: Item) -> Bool {
+        return count >= 1 && self[0] == item
+    }
+}
+
+///
+/// 扩展了 Container 协议，要求 Item 为特定类型
+extension Container where Item == Double {
+    func average() -> Double {
+        var sum = 0.0
+        for index in 0..<count {
+            sum += self[index]
+        }
+        return sum / Double(count)
+    }
+}
 
 // MARK: - 包含上下文关系的 where 分句
 private func contextualWhereClauses() {
+    var stackOfStrings = Stack<String>()
+    stackOfStrings.push("uno")
+    stackOfStrings.push("dos")
+    stackOfStrings.push("tres")
 
+    let element = "tres"
+    if stackOfStrings.endsWith(element) {
+        print("\(stackOfStrings) ends with \(element).")
+    } else {
+        print("\(stackOfStrings) ends with something else.")
+    }
+
+    print([1260.0, 1200.0, 98.6, 37.0].maximum())
+}
+
+extension Container {
+    func endsWith(_ item: Item) -> Bool
+        where Item: Equatable {
+        return count >= 1 && self[count - 1] == item
+    }
+
+    func maximum() -> Double
+        where Item == Double {
+        var max = 0.0
+        for index in 0..<count {
+            let element = self[index]
+            if element > max {
+                max = element
+            }
+        }
+        return max
+    }
 }
 
 // MARK: - 具有泛型 Where 子句的关联类型
 private func associatedTypesWithAGenericWhereClause() {
+    /*
+     迭代器（Iterator）的泛型 where 子句要求：无论迭代器是什么类型，迭代器中的元素类型，必须和容器项目的类型保持一致。makeIterator() 则提供了容器的迭代器的访问接口。
 
+     一个协议继承了另一个协议，你通过在协议声明的时候，包含泛型 where 子句，来添加了一个约束到被继承协议的关联类型。例如，下面的代码声明了一个 ComparableContainer 协议，它要求所有的 Item 必须是 Comparable 的。
+     */
+}
+
+protocol IteratorContainer {
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+
+    associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+    func makeIterator() -> Iterator
+}
+
+protocol ComparableContainer: IteratorContainer where Item: Comparable {
 }
 
 // MARK: - 泛型下标
 private func genericSubscripts() {
+    var stackOfStrings = Stack<String>()
+    stackOfStrings.push("uno")
+    stackOfStrings.push("dos")
+    stackOfStrings.push("tres")
 
+    let selectedIndices = [0, 2, 6]
+    let selectedElements = stackOfStrings[selectedIndices]
+    print("The selected elements are \(selectedElements).")
+}
+
+extension Container {
+    subscript<Indices: Sequence>(indices: Indices) -> [Item]
+    where Indices.Iterator.Element == Int {
+        var result = [Item]()
+        for index in indices {
+            if index < count {
+                result.append(self[index])
+            }
+        }
+        return result
+    }
 }
