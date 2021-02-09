@@ -98,25 +98,26 @@ class BasicOperators: MainProtocol {
         for index in 1...5 {
             print("\(index) * 5 = \(index * 5)")
         }
-        
+
         let names = ["Anna", "Alex", "Brian", "Jack"]
         let count = names.count
         // 半开区间运算符
         for i in 0..<count {
             print("第 \(i + 1) 个人叫 \(names[i])")
         }
-        
+
         // 单侧区间
-        for name in names[2...] {
-            print("右无限：\(name)")
-        }
+        // 升级到 Xcode 12.4 报了：右无限 Ambiguous use of 'subscript(_:)'
+//        for name in names[2...] {
+//            print("右无限：\(name)")
+//        }
         for name in names[...2] {
             print("左无限：\(name)")
         }
         for name in names[..<2] {
             print("左无限，最终值并不会落在区间内：\(name)")
         }
-        
+
         let range = ...5
         // false
         boolValue = range.contains(7)
