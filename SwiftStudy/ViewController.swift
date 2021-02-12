@@ -67,6 +67,7 @@ class ViewController: UIViewController {
         Generics().main()
         OpaqueTypes().main()
         AutomaticReferenceCounting().main()
+        MemorySafety().main()
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -77,7 +78,7 @@ class ViewController: UIViewController {
         updateImage()
 
         // 学习的内容暂时放这测试，测试完成再放到 viewDidLoad
-        MemorySafety().main()
+        AccessControl().main()
     }
     
     @IBAction func onConvertButtonClicked(_ sender: Any) {
