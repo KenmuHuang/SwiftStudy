@@ -346,9 +346,13 @@ private func conditionallyConformingToAProtocol() {
 
 extension Array: TextRepresentable where Element: TextRepresentable {
     var textualDescription: String {
-        let itemAsText = self.map {
-            $0.textualDescription
-        }
+//        let itemAsText = self.map {
+//            $0.textualDescription
+//        }
+        // Passing key paths as functions: https://www.swiftbysundell.com/tips/passing-key-paths-as-functions/
+        let itemAsText = self.map(
+            \.textualDescription
+        )
         return "[\(itemAsText.joined(separator: ", "))]"
     }
 }
