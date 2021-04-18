@@ -5,3 +5,7 @@
 官网：https://docs.swift.org/swift-book/GuidedTour/GuidedTour.html
 
 中文翻译：https://swiftgg.gitbook.io/swift/
+
+效果图：
+
+<img src="https://github.com/KenmuHuang/SwiftStudy/blob/master/Snapshot/iPhone12mini.png" />
