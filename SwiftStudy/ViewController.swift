@@ -9,31 +9,31 @@
 import UIKit
 
 class ViewController: UIViewController {
-     /// 封面图片视图
+    /// 封面图片视图
     @IBOutlet weak var imgVAvatar: UIImageView!
-    
     /// 获取随机图片按钮
     @IBOutlet weak var btnRandomImage: UIButton!
-
     /// 输入内容文本框
     @IBOutlet weak var txtFInputContent: UITextField!
-    
     /// 输入内容对应转换按钮
     @IBOutlet weak var btnConvert: UIButton!
-    
     /// 封面图片视图 - 宽高比例
     @IBOutlet weak var aspectOfAvatarImageView: NSLayoutConstraint!
-    
-    
+    /// 透明度动画视图
+    @IBOutlet weak var opacityAnimationView: UIView!
+    /// 缩放动画视图
+    @IBOutlet weak var scaleAnimationView: UIView!
+    /// 透明度和缩放动画视图
+    @IBOutlet weak var opacityScaleAnimationView: UIView!
+
     /// 随机图片数组
     let arrImageName = ["icon_home_dynamic_yellow", "icon_home_dynamic_blue", "home_ambush_bg", "icon_dynamic_hot_recommend"];
-    
     /// 随机图片索引下标数
     var randomImageNameIndex: Int = 0
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         updateImage()
 //        VariableAndConstantType().main()
 //        Condition().main()
@@ -74,7 +74,8 @@ class ViewController: UIViewController {
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         updateImage()
     }
-    
+
+    // MARK: - Event
     @IBAction func onRandomImageButtonClicked(_ sender: Any) {
         updateImage()
 
@@ -97,6 +98,15 @@ class ViewController: UIViewController {
                 }
             }
         }
+    }
+
+    @IBAction func onShowAnimationButtonClicked(_ sender: Any) {
+        opacityAnimation()
+        scaleAnimation()
+        opacityScaleAnimation()
+
+//        guard let sender = sender as? UIButton else { return }
+//        sender.isEnabled = false
     }
 
     // MARK: - Private Method
@@ -159,6 +169,130 @@ class ViewController: UIViewController {
         let range = content.startIndex..<content.index(content.startIndex, offsetBy: 1)
         let firstLowerChar = content[range].uppercased()
         return content.replacingCharacters(in: range, with: firstLowerChar)
+    }
+
+    private func opacityAnimation() {
+        if let sublayers = opacityAnimationView.layer.sublayers {
+            for layer in sublayers {
+                if layer is CAReplicatorLayer {
+                    layer.removeFromSuperlayer()
+                    break
+                }
+            }
+        }
+
+        let replicatorLayer = CAReplicatorLayer()
+        replicatorLayer.frame = CGRect(x: 10, y: 10, width: 80, height: 80)
+        replicatorLayer.borderColor = UIColor.white.cgColor
+        replicatorLayer.cornerRadius = 5.0
+        replicatorLayer.borderWidth = 1.0
+
+        let circle = CALayer()
+        circle.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 10, height: 10))
+        circle.backgroundColor = UIColor.white.cgColor
+        circle.cornerRadius = circle.frame.size.width / 2
+        circle.position = CGPoint(x: 20, y: 40)
+        replicatorLayer.addSublayer(circle)
+
+        let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+        opacityAnimation.fromValue = 1.0
+        opacityAnimation.toValue = 0.0
+        opacityAnimation.duration = 1.0
+        opacityAnimation.repeatCount = Float.greatestFiniteMagnitude
+        circle.add(opacityAnimation, forKey: nil)
+
+        let instanceCount = 10
+        replicatorLayer.instanceCount = instanceCount
+        replicatorLayer.instanceDelay = opacityAnimation.duration / CFTimeInterval(instanceCount)
+
+        let angle = -CGFloat.pi * 2 / CGFloat(instanceCount)
+        replicatorLayer.instanceTransform = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
+        opacityAnimationView.layer.addSublayer(replicatorLayer)
+    }
+
+    private func scaleAnimation() {
+        if let sublayers = scaleAnimationView.layer.sublayers {
+            for layer in sublayers {
+                if layer is CAReplicatorLayer {
+                    layer.removeFromSuperlayer()
+                    break
+                }
+            }
+        }
+
+        let replicatorLayer = CAReplicatorLayer()
+        replicatorLayer.frame = CGRect(x: 10, y: 10, width: 80, height: 80)
+        replicatorLayer.borderColor = UIColor.white.cgColor
+        replicatorLayer.cornerRadius = 5.0
+        replicatorLayer.borderWidth = 1.0
+
+        let circle = CALayer()
+        circle.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 10, height: 10))
+        circle.backgroundColor = UIColor.white.cgColor
+        circle.cornerRadius = circle.frame.size.width / 2
+        circle.position = CGPoint(x: 20, y: 40)
+        replicatorLayer.addSublayer(circle)
+
+        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+        scaleAnimation.fromValue = 1.0
+        scaleAnimation.toValue = 0.4
+        scaleAnimation.duration = 1.0
+        scaleAnimation.repeatCount = Float.greatestFiniteMagnitude
+        circle.add(scaleAnimation, forKey: nil)
+
+        let instanceCount = 10
+        replicatorLayer.instanceCount = instanceCount
+        replicatorLayer.instanceDelay = scaleAnimation.duration / CFTimeInterval(instanceCount)
+
+        let angle = -CGFloat.pi * 2 / CGFloat(instanceCount)
+        replicatorLayer.instanceTransform = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
+        scaleAnimationView.layer.addSublayer(replicatorLayer)
+    }
+
+    private func opacityScaleAnimation() {
+        if let sublayers = opacityScaleAnimationView.layer.sublayers {
+            for layer in sublayers {
+                if layer is CAReplicatorLayer {
+                    layer.removeFromSuperlayer()
+                    break
+                }
+            }
+        }
+
+        let replicatorLayer = CAReplicatorLayer()
+        replicatorLayer.frame = CGRect(x: 10, y: 10, width: 80, height: 80)
+        replicatorLayer.borderColor = UIColor.white.cgColor
+        replicatorLayer.cornerRadius = 5.0
+        replicatorLayer.borderWidth = 1.0
+
+        let circle = CALayer()
+        circle.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 12, height: 4))
+        circle.backgroundColor = UIColor.white.cgColor
+        circle.cornerRadius = 2.0
+        circle.position = CGPoint(x: 20, y: 40)
+        replicatorLayer.addSublayer(circle)
+
+        let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+        opacityAnimation.fromValue = 1.0
+        opacityAnimation.toValue = 0.0
+        opacityAnimation.duration = 1.0
+        opacityAnimation.repeatCount = Float.greatestFiniteMagnitude
+        circle.add(opacityAnimation, forKey: nil)
+
+        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+        scaleAnimation.fromValue = 1.0
+        scaleAnimation.toValue = 0.4
+        scaleAnimation.duration = 1.0
+        scaleAnimation.repeatCount = Float.greatestFiniteMagnitude
+        circle.add(scaleAnimation, forKey: nil)
+
+        let instanceCount = 10
+        replicatorLayer.instanceCount = instanceCount
+        replicatorLayer.instanceDelay = scaleAnimation.duration / CFTimeInterval(instanceCount)
+
+        let angle = -CGFloat.pi * 2 / CGFloat(instanceCount)
+        replicatorLayer.instanceTransform = CATransform3DMakeRotation(angle, 0.0, 0.0, 1.0)
+        opacityScaleAnimationView.layer.addSublayer(replicatorLayer)
     }
 }
 

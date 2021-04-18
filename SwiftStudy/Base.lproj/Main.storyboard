@@ -58,14 +58,64 @@
                                     <action selector="onConvertButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="exX-Qb-ass"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="jYC-gX-mpg">
+                                <rect key="frame" x="15" y="591" width="384" height="100"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLK-H8-iyY">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="wTB-rB-Xbf"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gwy-q0-Epp">
+                                        <rect key="frame" x="142" y="0.0" width="100" height="100"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="bmG-bb-xUc"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WRo-ir-idZ">
+                                        <rect key="frame" x="284" y="0.0" width="100" height="100"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="LvZ-gj-RmB"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Vfp-p4-Ln9"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVg-KB-wLK">
+                                <rect key="frame" x="157" y="706" width="100" height="50"/>
+                                <color key="backgroundColor" red="0.41176470590000003" green="0.50980392159999999" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="lm0-zT-WYx"/>
+                                    <constraint firstAttribute="height" constant="50" id="xqe-TM-dzO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <state key="normal" title="显示动画">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onShowAnimationButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z5H-cQ-wKp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="e6B-3k-Shf" firstAttribute="top" secondItem="kbp-N0-eh7" secondAttribute="bottom" constant="15" id="2l0-2B-vhK"/>
+                            <constraint firstItem="wVg-KB-wLK" firstAttribute="top" secondItem="jYC-gX-mpg" secondAttribute="bottom" constant="15" id="4Lz-vT-lly"/>
                             <constraint firstItem="1PA-c4-cJg" firstAttribute="top" secondItem="e6B-3k-Shf" secondAttribute="bottom" constant="45" id="5Ba-U9-W4e"/>
+                            <constraint firstItem="jYC-gX-mpg" firstAttribute="top" secondItem="xEn-OQ-Gqy" secondAttribute="bottom" constant="45" id="H7w-xB-XQ4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jYC-gX-mpg" secondAttribute="trailing" constant="15" id="NNw-dc-Yhs"/>
                             <constraint firstItem="kbp-N0-eh7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="Ndb-Xr-XrL"/>
                             <constraint firstItem="1PA-c4-cJg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="OYP-Ul-UNO"/>
+                            <constraint firstItem="jYC-gX-mpg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="UPl-Se-pXt"/>
+                            <constraint firstItem="wVg-KB-wLK" firstAttribute="centerX" secondItem="jYC-gX-mpg" secondAttribute="centerX" id="Vod-RS-tiU"/>
                             <constraint firstItem="kbp-N0-eh7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="bEq-Ze-TO5"/>
                             <constraint firstItem="e6B-3k-Shf" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cNt-vW-uEz"/>
                             <constraint firstItem="kbp-N0-eh7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nqV-MX-QRY"/>
@@ -82,6 +132,9 @@
                         <outlet property="btnConvert" destination="xEn-OQ-Gqy" id="f7l-xq-XrT"/>
                         <outlet property="btnRandomImage" destination="e6B-3k-Shf" id="8Y5-lf-uJw"/>
                         <outlet property="imgVAvatar" destination="kbp-N0-eh7" id="ngc-XU-KED"/>
+                        <outlet property="opacityAnimationView" destination="YLK-H8-iyY" id="X0N-qD-uOF"/>
+                        <outlet property="opacityScaleAnimationView" destination="WRo-ir-idZ" id="Qwo-dq-i4F"/>
+                        <outlet property="scaleAnimationView" destination="gwy-q0-Epp" id="nLR-6t-23p"/>
                         <outlet property="txtFInputContent" destination="1PA-c4-cJg" id="QQL-7U-UWX"/>
                     </connections>
                 </viewController>
@@ -93,6 +146,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
