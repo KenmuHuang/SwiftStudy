@@ -69,6 +69,7 @@ class ViewController: UIViewController {
         AutomaticReferenceCounting().main()
         MemorySafety().main()
         AccessControl().main()
+        AdvancedOperators().main()
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -79,8 +80,9 @@ class ViewController: UIViewController {
     @IBAction func onRandomImageButtonClicked(_ sender: Any) {
         updateImage()
 
-        // 学习的内容暂时放这测试，测试完成再放到 viewDidLoad
-        AdvancedOperators().main()
+        // 学习的内容暂时放这测试，算法测试
+        Bubble().main()
+        Select().main()
     }
     
     @IBAction func onConvertButtonClicked(_ sender: Any) {
