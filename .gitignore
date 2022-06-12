@@ -1,20 +1,12 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Xcode template
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-## User settings
-xcuserdata/
-
-## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
-*.xcscmblueprint
-*.xccheckout
-
-## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+## Build generated
 build/
 DerivedData/
-*.moved-aside
+
+## Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -23,25 +15,46 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+xcuserdata/
 
-## Gcc Patch
-/*.gcno
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
 
-### Example user template template
-### Example user template
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
 
-# IntelliJ project files
-.idea
-*.iml
-out
-gen
-.idea/$CACHE_FILE$
-.idea/.gitignore
-.idea/SwiftStudy.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/runConfigurations/
-.idea/vcs.xml
-.idea/xcode.xml
+# Carthage
+Carthage/
+Carthage/Build
+Cartfile.resolved
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+###*.xcworkspace
+*.xcworkspace/xcuserdata
+*.xcodeproj/xcuserdata
+#!default.xcworkspace
+
+###xcuserdata
+profile
+*.moved-aside
+.DS_Store
+*.lock
+
+# CocoaPods
+Pods/
+
+# idea
+.idea/
+.gitprefix
 SwiftStudy.xcodeproj/project.xcworkspace/xcuserdata/Kenmu.xcuserdatad/xcschemes/
 SwiftStudy.xcodeproj/xcshareddata/
