@@ -377,6 +377,7 @@ private func extensionsWithAGenericWhereClause() {
         print("\(stackOfStrings) starts with something else.")
     }
 
+    // 使用 SwifterSwift 的 average 方法
     print([1260.0, 1200.0, 98.6, 37.0].average())
 }
 
@@ -403,15 +404,15 @@ extension Container where Item: Equatable {
 
 ///
 /// 扩展了 Container 协议，要求 Item 为特定类型
-extension Container where Item == Double {
-    func average() -> Double {
-        var sum = 0.0
-        for index in 0..<count {
-            sum += self[index]
-        }
-        return sum / Double(count)
-    }
-}
+//extension Container where Item == Double {
+//    func average() -> Double {
+//        var sum = 0.0
+//        for index in 0..<count {
+//            sum += self[index]
+//        }
+//        return sum / Double(count)
+//    }
+//}
 
 // MARK: - 包含上下文关系的 where 分句
 private func contextualWhereClauses() {

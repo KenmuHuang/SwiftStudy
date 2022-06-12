@@ -54,6 +54,13 @@
 		F98F3ED5247F728800E30571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98F3ED4247F728800E30571 /* Assets.xcassets */; };
 		F98F3ED8247F728800E30571 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98F3ED6247F728800E30571 /* LaunchScreen.storyboard */; };
 		F9C858AA25B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */; };
+		F9F8F14A28562E0E00BF074E /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F14928562E0E00BF074E /* UserViewModel.swift */; };
+		F9F8F14C28562E3700BF074E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F14B28562E3700BF074E /* UserView.swift */; };
+		F9F8F14E28562E6D00BF074E /* UserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F8F14D28562E6D00BF074E /* UserView.xib */; };
+		F9F8F15028562E9200BF074E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F14F28562E9200BF074E /* UserVC.swift */; };
+		F9F8F15228562FFF00BF074E /* UIView+Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F15128562FFF00BF074E /* UIView+Base.swift */; };
+		F9F8F155285631F000BF074E /* CommonDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F154285631F000BF074E /* CommonDefinition.swift */; };
+		F9F8F15928564E3C00BF074E /* Observable+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F15828564E3B00BF074E /* Observable+Operators.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +116,13 @@
 		F98F3ED9247F728800E30571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9B480A924F014110000BEE8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
+		F9F8F14928562E0E00BF074E /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		F9F8F14B28562E3700BF074E /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		F9F8F14D28562E6D00BF074E /* UserView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserView.xib; sourceTree = "<group>"; };
+		F9F8F14F28562E9200BF074E /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
+		F9F8F15128562FFF00BF074E /* UIView+Base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Base.swift"; sourceTree = "<group>"; };
+		F9F8F154285631F000BF074E /* CommonDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonDefinition.swift; sourceTree = "<group>"; };
+		F9F8F15828564E3B00BF074E /* Observable+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Operators.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +183,6 @@
 		450762DC59769F75D3C3D37A /* Language */ = {
 			isa = PBXGroup;
 			children = (
-				F9C858A825B5E75100B6D52F /* Extension */,
 				45076B9CD6301272224B6FD2 /* Major */,
 				4507604BE23E558F030C00B8 /* Detail */,
 				4507633DCF78F74881C51C6F /* MainProtocol.swift */,
@@ -215,7 +228,6 @@
 				2BF65212249E71BCA9EA22DE /* Pods-SwiftStudy.debug.xcconfig */,
 				62C7EC51000492B5CBE9CA18 /* Pods-SwiftStudy.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -248,6 +260,7 @@
 				F98F3ED4247F728800E30571 /* Assets.xcassets */,
 				F98F3ED6247F728800E30571 /* LaunchScreen.storyboard */,
 				F98F3ED9247F728800E30571 /* Info.plist */,
+				F9F8F15628564DF600BF074E /* Base */,
 				450762DC59769F75D3C3D37A /* Language */,
 				4507606B3434FB4C27A20ECE /* Algorithm */,
 				F9F8F1422855FF8500BF074E /* Library */,
@@ -258,7 +271,9 @@
 		F9C858A825B5E75100B6D52F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				F9F8F15728564E0D00BF074E /* RxSwift */,
 				F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */,
+				F9F8F15128562FFF00BF074E /* UIView+Base.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -293,6 +308,7 @@
 		F9F8F1452856006100BF074E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F9F8F14F28562E9200BF074E /* UserVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -300,6 +316,8 @@
 		F9F8F1462856007300BF074E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F9F8F14B28562E3700BF074E /* UserView.swift */,
+				F9F8F14D28562E6D00BF074E /* UserView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -314,8 +332,34 @@
 		F9F8F1482856009300BF074E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				F9F8F14928562E0E00BF074E /* UserViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F9F8F153285631D100BF074E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				F9F8F154285631F000BF074E /* CommonDefinition.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		F9F8F15628564DF600BF074E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				F9C858A825B5E75100B6D52F /* Extension */,
+				F9F8F153285631D100BF074E /* Config */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		F9F8F15728564E0D00BF074E /* RxSwift */ = {
+			isa = PBXGroup;
+			children = (
+				F9F8F15828564E3B00BF074E /* Observable+Operators.swift */,
+			);
+			path = RxSwift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,6 +425,7 @@
 				F98F3ED8247F728800E30571 /* LaunchScreen.storyboard in Resources */,
 				F98F3ED5247F728800E30571 /* Assets.xcassets in Resources */,
 				F98F3ED3247F728700E30571 /* Main.storyboard in Resources */,
+				F9F8F14E28562E6D00BF074E /* UserView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,11 +479,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F98F3ED0247F728700E30571 /* ViewController.swift in Sources */,
+				F9F8F14A28562E0E00BF074E /* UserViewModel.swift in Sources */,
 				F98F3ECC247F728700E30571 /* AppDelegate.swift in Sources */,
 				F98F3ECE247F728700E30571 /* SceneDelegate.swift in Sources */,
 				450763E4523102C0560F9596 /* VariableAndConstantType.swift in Sources */,
 				450765F8827942697F0979B6 /* Condition.swift in Sources */,
 				45076A45A56C5B2D615925C5 /* Function.swift in Sources */,
+				F9F8F14C28562E3700BF074E /* UserView.swift in Sources */,
 				45076633059FC0B1AA207FC8 /* Class.swift in Sources */,
 				45076E97ACBDA5F3E712C2F8 /* EnumerationAndStructure.swift in Sources */,
 				450760F2D75A72F88740380C /* ProtocolAndExtension.swift in Sources */,
@@ -450,10 +497,13 @@
 				450761D989AC735A08719F56 /* CollectionTypes.swift in Sources */,
 				450764B66E8568F19DA85E27 /* MainProtocol.swift in Sources */,
 				45076A8F441A234C51E51849 /* ControlFlow.swift in Sources */,
+				F9F8F155285631F000BF074E /* CommonDefinition.swift in Sources */,
 				45076F556ED5C64544A09E3E /* Functions.swift in Sources */,
+				F9F8F15228562FFF00BF074E /* UIView+Base.swift in Sources */,
 				4507611C61F021CF3443E581 /* Closures.swift in Sources */,
 				450763FC8D8441B80A940348 /* Enumerations.swift in Sources */,
 				45076D48B588A2CB0BA03741 /* StructuresAndClasses.swift in Sources */,
+				F9F8F15028562E9200BF074E /* UserVC.swift in Sources */,
 				F9C858AA25B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift in Sources */,
 				45076635C1F814E5C3F1CE5B /* Properties.swift in Sources */,
 				45076D368233508540DC710B /* Methods.swift in Sources */,
@@ -473,6 +523,7 @@
 				450762513B82A8C92084248F /* MemorySafety.swift in Sources */,
 				45076746ED4F8D51541E136E /* AccessControl.swift in Sources */,
 				450769D3453F7EF54B6F1319 /* AdvancedOperators.swift in Sources */,
+				F9F8F15928564E3C00BF074E /* Observable+Operators.swift in Sources */,
 				450762ED8C348680A1A50792 /* AlgorithmProtocol.swift in Sources */,
 				45076FFB63279E40F91EB7E5 /* Bubble.swift in Sources */,
 				45076EC15EDC12434BFC60B9 /* Select.swift in Sources */,

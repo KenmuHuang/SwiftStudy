@@ -77,15 +77,15 @@ class ViewController: UIViewController {
     }
 
     // MARK: - Event
-    @IBAction func onRandomImageButtonClicked(_ sender: Any) {
+    @IBAction func btnRandomImageClicked(_ sender: Any) {
         updateImage()
 
         // 学习的内容暂时放这测试，算法测试
         Bubble().main()
         Select().main()
     }
-    
-    @IBAction func onConvertButtonClicked(_ sender: Any) {
+
+    @IBAction func btnConvertClicked(_ sender: Any) {
         let content = txtFInputContent.text
         if content != nil {
             // 包含-或_的内容，转换为驼峰式
@@ -102,13 +102,18 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func onShowAnimationButtonClicked(_ sender: Any) {
+    @IBAction func btnShowAnimationClicked(_ sender: Any) {
         opacityAnimation()
         scaleAnimation()
         opacityScaleAnimation()
 
 //        guard let sender = sender as? UIButton else { return }
 //        sender.isEnabled = false
+    }
+
+    @IBAction func btnOpenUserPageClicked(_ sender: Any) {
+        let userVC = UserVC()
+        navigationController?.pushViewController(userVC, animated: true)
     }
 
     // MARK: - Private Method
