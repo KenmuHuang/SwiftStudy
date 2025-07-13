@@ -56,5 +56,14 @@ Pods/
 # idea
 .idea/
 .gitprefix
-SwiftStudy.xcodeproj/project.xcworkspace/xcuserdata/Kenmu.xcuserdatad/xcschemes/
-SwiftStudy.xcodeproj/xcshareddata/
+
+# archive
+archive/
+
+# icloud
+*.icloud
+
+# vscode
+.vscode/
+buildServer.json
+project_rule.md
