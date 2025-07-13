@@ -11,23 +11,30 @@ import SnapKit
 import SwifterSwift
 
 // MARK: - 全局引用
-
 @_exported import RxSwift
 @_exported import RxCocoa
 @_exported import RxGesture
 @_exported import NSObject_Rx
 
+
 // MARK: - 通用值
-let kMinHeightOfHiddenGroupTableHeader: CGFloat = 0.01
-let kMinHeightOfHiddenPlainTableHeader: CGFloat = 0.0
-let kHalfTopPadding: CGFloat = 7.5
-let kShadowAlpha: CGFloat = 0.05
-let kShadowColor: UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05)
-let kShareFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: 375.0, height: 667.0)
+let kHiddenGroupTableHeaderMinHeight: CGFloat = 0.01
+let kHiddenPlainTableHeaderMinHeight: CGFloat = 0
+let kHiddenViewHeight: CGFloat = 0.5
+let kLineViewHeight: CGFloat = 0.5
 let kHighlightedColorName: String = "highlightedColor"
+let kHighlightedBoldName: String = "bold"
+let kDotSeparator: String = " · "
+let kSecondsForOneDay: Int = 86400
+let kSecondsForOneHour: Int = 3600
+let kSecondsForOneMinute: Int = 60
+let kDefaultLeftPadding: CGFloat = 16.0
+let kLineColor: UIColor = .fromHexString("#EAEAEA")
+
 
 // MARK: - Block
 typealias BaseBlock = () -> Void
+typealias BaseScrollBlock = (_ scrollView: UIScrollView) -> Void
 
 
 // MARK: - 简化写法
@@ -52,16 +59,12 @@ public func funcIsLessThanOSVersion(_ version: String) -> Bool {
 }
 
 let kOSVersion = kDevice.systemVersion
-let kIsOS10OrLater = funcIsGreaterThanOrEqualToOSVersion("10.0")
-let kIsOS10Dot2OrLater = funcIsGreaterThanOrEqualToOSVersion("10.2")
-let kIsOS10Dot3OrLater = funcIsGreaterThanOrEqualToOSVersion("10.3")
-let kIsOS11OrBefore = funcIsLessThanOSVersion("12.0")
-let kIsOS11OrLater = funcIsGreaterThanOrEqualToOSVersion("11.0")
-let kIsOS12OrLater = funcIsGreaterThanOrEqualToOSVersion("12.0")
-let kIsOS13OrBefore = funcIsLessThanOSVersion("14.0")
-let kIsOS13OrLater = funcIsGreaterThanOrEqualToOSVersion("13.0")
 let kIsOS14OrLater = funcIsGreaterThanOrEqualToOSVersion("14.0")
 let kIsOS15OrLater = funcIsGreaterThanOrEqualToOSVersion("15.0")
+let kIsOS16OrLater = funcIsGreaterThanOrEqualToOSVersion("16.0")
+let kIsOS17OrLater = funcIsGreaterThanOrEqualToOSVersion("17.0")
+let kIsOS18OrLater = funcIsGreaterThanOrEqualToOSVersion("18.0")
+let kIsOS19OrLater = funcIsGreaterThanOrEqualToOSVersion("19.0")
 
 
 // MARK: - App（包的唯一标示、显示名称、Version 版本）
@@ -107,40 +110,24 @@ let kIsSmallSize = kIsPhone5 || kIsPhone4 || kIsPad
 
 /// 判断是否是刘海屏
 var kIsPhoneXModel: Bool {
-    if #available(iOS 11.0, *), UI_USER_INTERFACE_IDIOM() == .phone {
-        let size = UIScreen.main.bounds.size
-        let notchValue: Int = Int(size.width / size.height * 100)
-        return notchValue == 216 || notchValue == 46
-    }
-    return false
+    kIsPhone && kHeightOfHomeBar > 0
 }
+
 
 // MARK: - 屏幕大小、常用控件高度（状态栏、导航栏、选项卡、HomeBar）
-public func funcIsUseSafeArea() -> Bool {
-    if kIsOS12OrLater {
-        return true
-    } else if kIsOS11OrLater {
-        return kIsPhone && !kIsPhoneOldModel
-    }
-    return false
-}
-
 public func funcSafeAreaInsets() -> UIEdgeInsets {
-    if #available(iOS 11.0, *) {
-        return kApplication.delegate?.window??.safeAreaInsets ?? UIEdgeInsets.zero
-    }
-    return UIEdgeInsets.zero
+    kApplication.delegate?.window??.safeAreaInsets ?? UIEdgeInsets.zero
 }
 
 // 屏幕大小
 let kFrameOfMainScreen = kScreen.bounds
 let kWidthOfMainScreen = kFrameOfMainScreen.size.width
 let kHeightOfMainScreen = kFrameOfMainScreen.size.height
-let kHeightOfStatus: CGFloat = funcIsUseSafeArea() ? funcSafeAreaInsets().top : 20.0
-let kHeightOfNavigation: CGFloat = 44.0
+let kHeightOfStatus: CGFloat = funcSafeAreaInsets().top
+let kHeightOfNavigation: CGFloat = kIsPad ? 50.0 : 44.0
 let kHeightOfStatusAndNavigation = kHeightOfStatus + kHeightOfNavigation
-let kHeightOfHomeBar: CGFloat = funcIsUseSafeArea() ? funcSafeAreaInsets().bottom : 0.0
-let kHeightOfTabContent: CGFloat = 49.0
+let kHeightOfHomeBar: CGFloat = funcSafeAreaInsets().bottom
+let kHeightOfTabContent: CGFloat = kIsPad ? 50.0 : 49.0
 let kHeightOfTabBar = kHeightOfHomeBar + kHeightOfTabContent
 let kAbsoluteHeightOfMainScreen = kHeightOfMainScreen - kHeightOfStatusAndNavigation
 
@@ -276,13 +263,9 @@ public func funcGetSafeBoolFromDic(dic: [String: Any], key: String) -> Bool {
 
 // MARK: - 日志
 private func funcLog(_ text: String, _ typeSign: String, _ file: String = #file, _ line: Int = #line, _ function: String = #function) {
-    guard text.count > 0 else {
-        return
-    }
+    guard text.count > 0 else { return }
     let arrFileStringPart = file.components(separatedBy: "/")
-    guard arrFileStringPart.count > 0 else {
-        return
-    }
+    guard arrFileStringPart.count > 0 else { return }
     let content = "\(arrFileStringPart.last!) \(function) 第 \(line) 行\n [\(typeSign)]\(text)\n\n"
 
     switch typeSign {
@@ -321,8 +304,3 @@ public func funcLogError(_ text: String, _ file: String = #file, _ line: Int = #
     funcLog(text, "Error", file, line, function)
 }
 
-
-// MARK: - 字体
-public func funcBebasKaiFont(_ size: CGFloat) -> UIFont {
-    UIFont(name: "BebasKai", size: size) ?? UIFont.systemFont(ofSize: size)
-}

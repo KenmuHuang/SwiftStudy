@@ -1,4 +1,4 @@
-platform :ios, "10.0"
+platform :ios, "13.0"
 
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -48,7 +48,7 @@ target 'SwiftStudy' do
   # 网络图片【iOS 11 下才能用 version6-xcode13】
   pod 'Kingfisher', '4.10.1' # https://github.com/onevcat/Kingfisher
   # 转场过渡
-  pod 'Hero', '1.6.1' # https://github.com/lkzhao/Hero
+  pod 'Hero', '1.6.4' # https://github.com/lkzhao/Hero
   # 向下拖拽关闭
   pod 'PanModal', '1.2.7' # https://github.com/slackhq/PanModal
 

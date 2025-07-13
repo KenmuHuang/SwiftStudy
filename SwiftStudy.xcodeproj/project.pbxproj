@@ -54,6 +54,7 @@
 		F98F3ED5247F728800E30571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98F3ED4247F728800E30571 /* Assets.xcassets */; };
 		F98F3ED8247F728800E30571 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98F3ED6247F728800E30571 /* LaunchScreen.storyboard */; };
 		F9C858AA25B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */; };
+		F9EFD9B62E2373A500136DC7 /* UIColor+Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EFD9B52E2373A500136DC7 /* UIColor+Base.swift */; };
 		F9F8F14A28562E0E00BF074E /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F14928562E0E00BF074E /* UserViewModel.swift */; };
 		F9F8F14C28562E3700BF074E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8F14B28562E3700BF074E /* UserView.swift */; };
 		F9F8F14E28562E6D00BF074E /* UserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F8F14D28562E6D00BF074E /* UserView.xib */; };
@@ -116,6 +117,7 @@
 		F98F3ED9247F728800E30571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9B480A924F014110000BEE8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
+		F9EFD9B52E2373A500136DC7 /* UIColor+Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Base.swift"; sourceTree = "<group>"; };
 		F9F8F14928562E0E00BF074E /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		F9F8F14B28562E3700BF074E /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		F9F8F14D28562E6D00BF074E /* UserView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserView.xib; sourceTree = "<group>"; };
@@ -272,10 +274,19 @@
 			isa = PBXGroup;
 			children = (
 				F9F8F15728564E0D00BF074E /* RxSwift */,
+				F9EFD9B42E23734200136DC7 /* UIKit */,
 				F9C858A925B5E88D00B6D52F /* NSLayoutConstraint+Extension.swift */,
-				F9F8F15128562FFF00BF074E /* UIView+Base.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		F9EFD9B42E23734200136DC7 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				F9F8F15128562FFF00BF074E /* UIView+Base.swift */,
+				F9EFD9B52E2373A500136DC7 /* UIColor+Base.swift */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		F9F8F1422855FF8500BF074E /* Library */ = {
@@ -526,6 +537,7 @@
 				F9F8F15928564E3C00BF074E /* Observable+Operators.swift in Sources */,
 				450762ED8C348680A1A50792 /* AlgorithmProtocol.swift in Sources */,
 				45076FFB63279E40F91EB7E5 /* Bubble.swift in Sources */,
+				F9EFD9B62E2373A500136DC7 /* UIColor+Base.swift in Sources */,
 				45076EC15EDC12434BFC60B9 /* Select.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,6 +698,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R7N88J7F7X;
 				INFOPLIST_FILE = SwiftStudy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -705,6 +718,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R7N88J7F7X;
 				INFOPLIST_FILE = SwiftStudy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
